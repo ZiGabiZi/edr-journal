@@ -1,0 +1,20 @@
+title: Jurnal de parcurs — Sistem EDR
+description: Povestea din spatele fiecărei decizii și al fiecărui bug
+author: Țilică Gabriel-Lucian
+
+url: "https://ZiGabiZi.github.io"
+baseurl: "/edr-journal"
+
+theme: minima
+
+collections:
+  intrari:
+    output: true
+    permalink: /intrari/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: intrari
+    values:
+      layout: page
