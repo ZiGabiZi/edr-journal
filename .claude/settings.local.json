@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(git -C \"C:\\\\Users\\\\Gabi\\\\Documents\\\\Endpoint Detection and Response\\\\edr-journal\" log --oneline --stat)"
-    ]
-  }
-}
