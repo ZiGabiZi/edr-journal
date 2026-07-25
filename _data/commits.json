@@ -1,0 +1,863 @@
+{
+ "generat_la": "2026-07-25T14:07:00Z",
+ "depozite": [
+  "edr-agent",
+  "edr-server"
+ ],
+ "total": 51,
+ "commituri": [
+  {
+   "depozit": "edr-server",
+   "hash": "e993733",
+   "data": "2026-07-13",
+   "data_iso": "2026-07-13T01:23:33+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(server): detectează repornirea prin agent_instance_id, nu prin regresia secvenței",
+   "fisiere": [
+    "app/services/agent_service.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 41,
+   "linii_sterse": 15
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "476fade",
+   "data": "2026-07-13",
+   "data_iso": "2026-07-13T01:21:46+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(server): detectează repornirea prin agent_instance_id, nu prin regresia secvenței",
+   "fisiere": [
+    "app/routes/heartbeat.py",
+    "app/schemas/heartbeat.py",
+    "app/services/agent_service.py",
+    "app/tests/test_heartbeat_sequence.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 59,
+   "linii_sterse": 14
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4a25c36",
+   "data": "2026-07-13",
+   "data_iso": "2026-07-13T01:19:52+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(agent): identifică fiecare pornire cu agent_instance_id",
+   "fisiere": [
+    "agent.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 6,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "8c70576",
+   "data": "2026-07-13",
+   "data_iso": "2026-07-13T00:33:08+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent): ancorează calea agent.log la directorul agentului",
+   "fisiere": [
+    "agent.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 4,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "88a23c2",
+   "data": "2026-07-13",
+   "data_iso": "2026-07-13T00:31:03+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fixed the two failing idempotency tests by adding the missing pytest fixtures (client and registered_agent_id) to app/conftest.py",
+   "fisiere": [
+    "app/conftest.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 33,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "b218b0d",
+   "data": "2026-07-12",
+   "data_iso": "2026-07-12T18:50:08+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(server): respinge cu 409 re-înregistrarea agent_id de pe altă mașină",
+   "fisiere": [
+    "app/routes/agents.py",
+    "app/services/agent_service.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 32,
+   "linii_sterse": 5
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "d6b7cb0",
+   "data": "2026-07-12",
+   "data_iso": "2026-07-12T18:27:43+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent): trimite agent_startup direct când coada persistentă e indisponibilă",
+   "fisiere": [
+    "agent.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 21,
+   "linii_sterse": 11
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "382cd49",
+   "data": "2026-07-12",
+   "data_iso": "2026-07-12T15:32:48+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(events): deduplică recepția pe client_event_id pentru idempotență",
+   "fisiere": [
+    "app/schemas/event.py",
+    "app/services/agent_service.py",
+    "app/services/event_service.py",
+    "app/tests/test_agent_routes_integration.py",
+    "app/tests/test_duplicate_client_event_id_is_idempotent.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 201,
+   "linii_sterse": 113
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "457d17d",
+   "data": "2026-07-12",
+   "data_iso": "2026-07-12T15:31:02+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(agent): atașează client_event_id la evenimente pentru livrare idempotentă",
+   "fisiere": [
+    "agent.py",
+    "eveniment,",
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 5,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "d495321",
+   "data": "2026-07-11",
+   "data_iso": "2026-07-11T19:18:33+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent): pornește monitorizarea locală înaintea înregistrării pe server",
+   "fisiere": [
+    "agent.py",
+    "services/config_loader.py",
+    "services/event_spool.py",
+    "tests/__init__.py",
+    "tests/test_config_loader.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 95,
+   "linii_sterse": 37
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4837caa",
+   "data": "2026-07-05",
+   "data_iso": "2026-07-05T02:42:05+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent): stop event retry storms and anchor spool DB path",
+   "fisiere": [
+    ".gitignore",
+    "agent.py",
+    "services/event_spool.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 8,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "9bb131f",
+   "data": "2026-07-05",
+   "data_iso": "2026-07-05T02:23:43+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "Fix(dispatcher) wake() no longer discardes backoff's dispatcher",
+   "fisiere": [
+    "services/event_dispatcher.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 15,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "0eab4d9",
+   "data": "2026-07-04",
+   "data_iso": "2026-07-04T21:53:38+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(agent): route file events through persistent spool",
+   "fisiere": [
+    ".gitignore",
+    "agent.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 63,
+   "linii_sterse": 11
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "bab4817",
+   "data": "2026-07-04",
+   "data_iso": "2026-07-04T21:52:57+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(spool): add background dispatcher for store-and-forward delivery",
+   "fisiere": [
+    "services/event_dispatcher.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 194,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "ed3cee6",
+   "data": "2026-07-04",
+   "data_iso": "2026-07-04T21:51:50+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(spool): add persistent SQLite event queue",
+   "fisiere": [
+    "services/event_spool.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 217,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "f40ff46",
+   "data": "2026-07-04",
+   "data_iso": "2026-07-04T21:50:12+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(transport): treat HTTP 404 as recoverable AgentNotRegisteredError",
+   "fisiere": [
+    "services/transport.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 16,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "e7f67c4",
+   "data": "2026-07-04",
+   "data_iso": "2026-07-04T01:14:07+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent-service): prevent machine_id_hash=None collision in dedup logic",
+   "fisiere": [
+    "app/schemas/heartbeat.py",
+    "app/services/agent_service.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 10,
+   "linii_sterse": 9
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "46fd833",
+   "data": "2026-07-03",
+   "data_iso": "2026-07-03T17:32:36+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(agent): send monotonic sequence counter in heartbeat payload",
+   "fisiere": [
+    "agent.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 13,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "ad808b0",
+   "data": "2026-07-03",
+   "data_iso": "2026-07-03T17:28:54+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(heartbeat): detect lost heartbeats and agent restarts from sequence",
+   "fisiere": [
+    "app/routes/heartbeat.py",
+    "app/schemas/heartbeat.py",
+    "app/services/agent_service.py",
+    "app/tests/test_heartbeat_sequence.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 226,
+   "linii_sterse": 7
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "90005d6",
+   "data": "2026-07-03",
+   "data_iso": "2026-07-03T16:38:59+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent): apply server-dictated heartbeat cadence and rotate agent.log",
+   "fisiere": [
+    "agent.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 32,
+   "linii_sterse": 9
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "7b21e64",
+   "data": "2026-07-03",
+   "data_iso": "2026-07-03T16:37:37+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent): apply server-dictated heartbeat cadence and rotate agent.log",
+   "fisiere": [
+    "app/routes/heartbeat.py",
+    "app/schemas/heartbeat.py",
+    "app/services/.event_service.py.swp",
+    "app/services/agent_service.py",
+    "app/tests/test_agent_routes_integration.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 21,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "ce08dec",
+   "data": "2026-07-02",
+   "data_iso": "2026-07-02T20:06:05+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "Corectness and Robustness bug fixes",
+   "fisiere": [
+    "agent.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 2,
+   "linii_sterse": 7
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "69cfd92",
+   "data": "2026-07-02",
+   "data_iso": "2026-07-02T20:05:38+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "Corectness and Robustness bug fixes",
+   "fisiere": [
+    ".claude/settings.local.json",
+    ".gitignore",
+    ".vscode/settings.json",
+    "agent.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 7,
+   "linii_sterse": 19
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "eb9bfdb",
+   "data": "2026-07-02",
+   "data_iso": "2026-07-02T20:04:58+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "(fix) Corectness and Robustenss bug fixes",
+   "fisiere": [
+    ".claude/settings.local.json",
+    ".gitignore",
+    "app/schemas/agent.py",
+    "app/services/agent_service.py",
+    "app/services/event_service.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 13,
+   "linii_sterse": 22
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "cf19587",
+   "data": "2026-07-02",
+   "data_iso": "2026-07-02T19:15:41+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "Bug fix duplicate event ID-s when two concurrent POST /api/events read the same length",
+   "fisiere": [
+    ".claude/settings.local.json",
+    "app/services/event_service.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 27,
+   "linii_sterse": 5
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "c49cef8",
+   "data": "2026-07-02",
+   "data_iso": "2026-07-02T19:12:24+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "Bug fix Race conditions și RuntimeError în accesarea in-memory agents_store resolves #2",
+   "fisiere": [
+    "app/services/agent_service.py",
+    "app/tests/test_agent_service_concurrency.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 157,
+   "linii_sterse": 54
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "3eaed02",
+   "data": "2026-07-02",
+   "data_iso": "2026-07-02T17:11:06+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "feat(agent): included monitoring functionality in agent workflow",
+   "fisiere": [
+    ".claude/settings.local.json",
+    ".gitignore",
+    "agent.py",
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 74,
+   "linii_sterse": 6
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "f560c26",
+   "data": "2026-07-01",
+   "data_iso": "2026-07-01T15:04:52+03:00",
+   "luna": "2026-07",
+   "luna_afisata": "iulie 2026",
+   "mesaj": "fix(agent-service): derive agent status lazily from last_seen timestamp",
+   "fisiere": [
+    ".gitignore",
+    "app/conftest.py",
+    "app/services/agent_service.py",
+    "app/tests/__init__.py",
+    "app/tests/test_agent_routes_integration.py",
+    "app/tests/test_agent_status_unit.py",
+    "requirements-dev.txt"
+   ],
+   "numar_fisiere": 7,
+   "linii_adaugate": 161,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "dd0bf15",
+   "data": "2026-06-29",
+   "data_iso": "2026-06-29T22:05:39+03:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Quick bug fix",
+   "fisiere": [
+    ".claude/settings.local.json",
+    ".vscode/settings.json",
+    "agent.py",
+    "services/backoff.py",
+    "services/transport.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 8,
+   "linii_sterse": 19
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "8e10ff8",
+   "data": "2026-06-29",
+   "data_iso": "2026-06-29T04:27:02+03:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "fix: resolve 8 correctness and  resilience bugs",
+   "fisiere": [
+    "agent.py",
+    "services/backoff.py",
+    "services/file_monitor.py",
+    "services/transport.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 71,
+   "linii_sterse": 22
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "7ed592f",
+   "data": "2026-06-27",
+   "data_iso": "2026-06-27T15:13:25+00:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "feat(agents): implement dedicated heartbeat endpoint and C2 directives",
+   "fisiere": [
+    "app/main.py",
+    "app/routes/heartbeat.py",
+    "app/schemas/heartbeat.py",
+    "app/services/agent_service.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 65,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "91c6b8d",
+   "data": "2026-06-27",
+   "data_iso": "2026-06-27T08:19:41-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "feat(agent): migrate heartbeat to dedicated API and implement C2 self-healing",
+   "fisiere": [
+    ".gitignore",
+    "agent.py",
+    "services/transport.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 33,
+   "linii_sterse": 17
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "69ccc1e",
+   "data": "2026-06-26",
+   "data_iso": "2026-06-26T17:22:56-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "feat(core): implement hybrid agent-anchored jitter backoff",
+   "fisiere": [
+    "agent.py",
+    "services/backoff.py",
+    "services/config_loader.py",
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 452,
+   "linii_sterse": 38
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "10421cd",
+   "data": "2026-06-25",
+   "data_iso": "2026-06-25T12:57:04-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Rezolvare bug validare + identare + mici ajustari cross-platform + hostname problem",
+   "fisiere": [
+    "services/config_loader.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 19,
+   "linii_sterse": 16
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "87af315",
+   "data": "2026-06-25",
+   "data_iso": "2026-06-25T10:58:28-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Rezolvare Bug de tip thrashing pentru a evita Resource Exhaustion de la nivelul cleanup-ului",
+   "fisiere": [
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 3,
+   "linii_sterse": 4
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "e08c798",
+   "data": "2026-06-25",
+   "data_iso": "2026-06-25T10:16:21-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Adaugare protectie la double-start + fix redundanta",
+   "fisiere": [
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 10,
+   "linii_sterse": 5
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "719268c",
+   "data": "2026-06-24",
+   "data_iso": "2026-06-24T15:27:47-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Fix Memory Leak, caz mutare file, filtrare pentru extensii relevante",
+   "fisiere": [
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 77,
+   "linii_sterse": 12
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "bcf300c",
+   "data": "2026-06-24",
+   "data_iso": "2026-06-24T13:59:20-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Creare sistem minimal de monitorizare a fisierelor",
+   "fisiere": [
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 273,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "cc2983b",
+   "data": "2026-06-19",
+   "data_iso": "2026-06-19T17:40:15-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Modificare config pentru includerea monitorizarii directoarelor initiale",
+   "fisiere": [
+    "config.json",
+    "requirements.txt",
+    "services/config_loader.py",
+    "services/file_monitor.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 61,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "ba78fa1",
+   "data": "2026-06-19",
+   "data_iso": "2026-06-19T13:11:57+00:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Final architecture",
+   "fisiere": [
+    "rules/test",
+    "storage/samples/test",
+    "storage/test"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 0,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "5a1b023",
+   "data": "2026-06-19",
+   "data_iso": "2026-06-19T13:03:30+00:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Test",
+   "fisiere": [
+    "app/analysis/test"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 0,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "acaaa5c",
+   "data": "2026-06-19",
+   "data_iso": "2026-06-19T13:02:09+00:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Removed unnecesary files",
+   "fisiere": [
+    "..gitignore.swp",
+    ".gitignore"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 1,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "23700c0",
+   "data": "2026-06-19",
+   "data_iso": "2026-06-19T12:53:26+00:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Test",
+   "fisiere": [
+    "..gitignore.swp"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 0,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "c195a31",
+   "data": "2026-06-19",
+   "data_iso": "2026-06-19T07:53:18-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Long running agent with heartbeat loop",
+   "fisiere": [
+    ".gitignore",
+    "agent.py",
+    "config.json",
+    "services/config_loader.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 126,
+   "linii_sterse": 50
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "1662e43",
+   "data": "2026-06-18",
+   "data_iso": "2026-06-18T10:21:31-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Eliminare file neimportante din monitorizare",
+   "fisiere": [
+    "__pycache__/agent.cpython-314.pyc",
+    "services/__pycache__/__init__.cpython-314.pyc",
+    "services/__pycache__/config_loader.cpython-314.pyc",
+    "services/__pycache__/system_info.cpython-314.pyc",
+    "services/__pycache__/transport.cpython-314.pyc"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 0,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "8d48faf",
+   "data": "2026-06-18",
+   "data_iso": "2026-06-18T10:05:48-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Refactor: Implementare sistem de logging persisten",
+   "fisiere": [
+    ".gitignore",
+    "agent.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 38,
+   "linii_sterse": 24
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "42fd5b5",
+   "data": "2026-06-07",
+   "data_iso": "2026-06-07T22:25:35+00:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Extending agent data informations",
+   "fisiere": [
+    "app/routes/agents.py",
+    "app/schemas/agent.py",
+    "app/services/agent_service.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 83,
+   "linii_sterse": 18
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4485f03",
+   "data": "2026-06-07",
+   "data_iso": "2026-06-07T15:50:12-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Functionalitatea agentului EDR minimal completa",
+   "fisiere": [
+    "__pycache__/agent.cpython-314.pyc",
+    "agent.py",
+    "services/__pycache__/__init__.cpython-314.pyc",
+    "services/__pycache__/config_loader.cpython-314.pyc",
+    "services/__pycache__/system_info.cpython-314.pyc",
+    "services/__pycache__/transport.cpython-314.pyc"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 124,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "a084c98",
+   "data": "2026-06-07",
+   "data_iso": "2026-06-07T11:01:32-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "HTTP Transport layer for EDR communication",
+   "fisiere": [
+    "services/system_info.py",
+    "services/transport.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 141,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "dd84d34",
+   "data": "2026-06-05",
+   "data_iso": "2026-06-05T16:05:41-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Agent config validation and system fingerprinting",
+   "fisiere": [
+    "config.json",
+    "requirements.txt",
+    "services/config_loader.py",
+    "services/system_info.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 231,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "58ddfa8",
+   "data": "2026-06-04",
+   "data_iso": "2026-06-04T17:24:07-07:00",
+   "luna": "2026-06",
+   "luna_afisata": "iunie 2026",
+   "mesaj": "Structura agent EDR minimal",
+   "fisiere": [
+    ".gitignore",
+    "agent.py",
+    "services/__init__.py",
+    "services/config_loader.py",
+    "services/system_info.py",
+    "services/transport.py"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 7,
+   "linii_sterse": 1
+  }
+ ]
+}

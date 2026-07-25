@@ -1,0 +1,220 @@
+---
+layout: default
+---
+
+{%- assign date = site.data.commits -%}
+{%- assign commituri = date.commituri -%}
+
+{%- comment -%}
+  Indexul referinţelor, construit o singură dată. Delimitatorii de virgulă de
+  la ambele capete fac potrivirea exactă, ca un hash care e prefixul altuia
+  să nu producă o coincidenţă falsă.
+{%- endcomment -%}
+{%- assign referinte = "," -%}
+{%- for intrare in site.intrari -%}
+  {%- for c in intrare.commits -%}
+    {%- assign referinte = referinte | append: c | append: "," -%}
+  {%- endfor -%}
+{%- endfor -%}
+
+{%- assign acoperite = 0 -%}
+{%- for c in commituri -%}
+  {%- capture cheie %},{{ c.depozit }}@{{ c.hash }},{% endcapture -%}
+  {%- if referinte contains cheie -%}
+    {%- assign acoperite = acoperite | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign fara_poveste = commituri.size | minus: acoperite -%}
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <span class="curent">parcurs</span>
+</nav>
+
+<header class="antet-tema">
+  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ git log --all --oneline</p>
+  <h1>Parcurs</h1>
+  <p class="rezumat">Istoricul celor două repo-uri de cod, cronologic. Commit-urile
+  care au deja o intrare scrisă sunt marcate; restul sunt, practic, backlog-ul
+  jurnalului.</p>
+</header>
+
+{%- if commituri == nil or commituri.size == 0 %}
+<p class="gol">// <code>_data/commits.json</code> lipsește sau e gol — rulează
+<code>python scripts/genereaza_timeline.py</code></p>
+{%- else %}
+
+<section class="statistici" aria-label="Acoperirea istoricului">
+  <div class="statistica">
+    <div class="numar">{{ commituri | size }}</div>
+    <div class="descriere">commit-uri</div>
+  </div>
+  <div class="statistica">
+    <div class="numar">{{ acoperite }}</div>
+    <div class="descriere">cu poveste scrisă</div>
+  </div>
+  <div class="statistica">
+    <div class="numar">{{ fara_poveste }}</div>
+    <div class="descriere">în backlog</div>
+  </div>
+</section>
+
+<div class="filtre" data-filtre-parcurs hidden>
+  <div class="filtru-grup" role="group" aria-label="Filtrează commit-urile">
+    <span class="filtru-eticheta">arată</span>
+    <button type="button" class="buton-filtru" data-filtru-acoperire="toate" aria-pressed="true">toate</button>
+    <button type="button" class="buton-filtru" data-filtru-acoperire="fara" aria-pressed="false">fără poveste</button>
+    <button type="button" class="buton-filtru" data-filtru-acoperire="cu" aria-pressed="false">cu poveste</button>
+  </div>
+  <div class="filtru-grup" role="group" aria-label="Filtrează după depozit">
+    <span class="filtru-eticheta">repo</span>
+    <button type="button" class="buton-filtru" data-filtru-depozit="toate" aria-pressed="true">ambele</button>
+    {%- for depozit in date.depozite %}
+    <button type="button" class="buton-filtru depozit--{{ depozit }}" data-filtru-depozit="{{ depozit }}" aria-pressed="false">{{ depozit }}</button>
+    {%- endfor %}
+  </div>
+  <div class="filtru-stare">
+    <span class="rezultate" data-rezultate-parcurs aria-live="polite"></span>
+  </div>
+</div>
+
+<main class="parcurs" data-lista-commituri>
+  {%- assign luni = commituri | group_by: "luna_afisata" -%}
+  {%- for luna in luni %}
+  <section class="luna" data-luna>
+    <h2 class="sectiune-titlu">// {{ luna.name }}</h2>
+
+    {%- for c in luna.items %}
+    {%- capture cheie %},{{ c.depozit }}@{{ c.hash }},{% endcapture -%}
+    {%- assign are_poveste = false -%}
+    {%- if referinte contains cheie %}{% assign are_poveste = true %}{% endif -%}
+    {%- if are_poveste -%}
+      {%- assign referinta = c.depozit | append: "@" | append: c.hash -%}
+      {%- assign intrare = site.intrari | where_exp: "i", "i.commits contains referinta" | first -%}
+    {%- endif %}
+
+    <article class="commit{% if are_poveste %} commit--cu-poveste{% endif %}"
+             data-acoperire="{% if are_poveste %}cu{% else %}fara{% endif %}"
+             data-depozit="{{ c.depozit }}">
+      <div class="commit-antet">
+        <time class="data" datetime="{{ c.data }}">{{ c.data | date: "%d.%m" }}</time>
+        <span class="depozit-eticheta depozit--{{ c.depozit }}">{{ c.depozit }}</span>
+        <a class="hash" href="https://github.com/{{ site.github_user }}/{{ c.depozit }}/commit/{{ c.hash }}"
+           rel="noopener">{{ c.hash }}</a>
+      </div>
+
+      <p class="commit-mesaj">{{ c.mesaj }}</p>
+
+      <div class="commit-subsol">
+        <span class="delta">
+          <span class="adaugate">+{{ c.linii_adaugate }}</span>
+          <span class="sterse">−{{ c.linii_sterse }}</span>
+          <span class="fisiere-numar">{{ c.numar_fisiere }}
+            {%- if c.numar_fisiere == 1 %} fișier{% else %} fișiere{% endif %}</span>
+        </span>
+
+        {%- if are_poveste and intrare %}
+        <a class="legatura-intrare" href="{{ intrare.url | relative_url }}">
+          povestea → {{ intrare.title }}
+        </a>
+        {%- endif %}
+      </div>
+
+      {%- if c.fisiere.size > 0 %}
+      <details class="fisiere">
+        <summary>fișiere atinse</summary>
+        <ul>
+          {%- for f in c.fisiere %}
+          <li><code>{{ f }}</code></li>
+          {%- endfor %}
+        </ul>
+      </details>
+      {%- endif %}
+    </article>
+    {%- endfor %}
+  </section>
+  {%- endfor %}
+
+  <p class="gol" data-gol-parcurs hidden>// niciun commit nu corespunde filtrelor</p>
+</main>
+
+<p class="nota-generare">
+  Generat din <code>git log</code> la {{ date.generat_la | date: "%d.%m.%Y, %H:%M" }} UTC.
+  Se reîmprospătează rulând <code>python scripts/genereaza_timeline.py</code>.
+</p>
+
+<script>
+(function () {
+  "use strict";
+
+  var bara = document.querySelector("[data-filtre-parcurs]");
+  var lista = document.querySelector("[data-lista-commituri]");
+  if (!bara || !lista) { return; }
+
+  var commituri = Array.prototype.slice.call(lista.querySelectorAll("[data-acoperire]"));
+  if (commituri.length === 0) { return; }
+
+  var luni = Array.prototype.slice.call(lista.querySelectorAll("[data-luna]"));
+  var rezultate = bara.querySelector("[data-rezultate-parcurs]");
+  var golParcurs = lista.querySelector("[data-gol-parcurs]");
+
+  var butoaneAcoperire = Array.prototype.slice.call(bara.querySelectorAll("[data-filtru-acoperire]"));
+  var butoaneDepozit = Array.prototype.slice.call(bara.querySelectorAll("[data-filtru-depozit]"));
+
+  var acoperireAleasa = "toate";
+  var depozitAles = "toate";
+
+  function aplica() {
+    var vizibile = 0;
+
+    commituri.forEach(function (commit) {
+      var potrivireAcoperire = acoperireAleasa === "toate" ||
+        commit.getAttribute("data-acoperire") === acoperireAleasa;
+      var potrivireDepozit = depozitAles === "toate" ||
+        commit.getAttribute("data-depozit") === depozitAles;
+
+      var vizibil = potrivireAcoperire && potrivireDepozit;
+      commit.hidden = !vizibil;
+      if (vizibil) { vizibile++; }
+    });
+
+    // O lună rămasă fără commit-uri vizibile şi-ar păstra altfel titlul singur.
+    luni.forEach(function (luna) {
+      var areVizibile = Array.prototype.slice
+        .call(luna.querySelectorAll("[data-acoperire]"))
+        .some(function (c) { return !c.hidden; });
+      luna.hidden = !areVizibile;
+    });
+
+    butoaneAcoperire.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-filtru-acoperire") === acoperireAleasa));
+    });
+    butoaneDepozit.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-filtru-depozit") === depozitAles));
+    });
+
+    rezultate.textContent = vizibile + " din " + commituri.length + " commit-uri";
+    if (golParcurs) { golParcurs.hidden = vizibile !== 0; }
+  }
+
+  bara.addEventListener("click", function (ev) {
+    var buton = ev.target.closest("button");
+    if (!buton || !bara.contains(buton)) { return; }
+
+    if (buton.hasAttribute("data-filtru-acoperire")) {
+      acoperireAleasa = buton.getAttribute("data-filtru-acoperire");
+    } else if (buton.hasAttribute("data-filtru-depozit")) {
+      depozitAles = buton.getAttribute("data-filtru-depozit");
+    } else {
+      return;
+    }
+
+    aplica();
+  });
+
+  bara.hidden = false;
+  aplica();
+})();
+</script>
+{%- endif %}

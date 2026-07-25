@@ -4,8 +4,14 @@ author: Țilică Gabriel-Lucian
 
 url: "https://ZiGabiZi.github.io"
 baseurl: "/edr-journal"
+github_user: ZiGabiZi   # folosit pentru link-urile din `commits`
 
 theme: minima
+
+exclude:
+  - scripts/       # unealtă de build, nu conținut publicabil
+  - Gemfile
+  - Gemfile.lock
 
 collections:
   intrari:
@@ -17,4 +23,4 @@ defaults:
       path: ""
       type: intrari
     values:
-      layout: page
+      layout: intrare

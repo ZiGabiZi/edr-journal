@@ -1,0 +1,123 @@
+---
+layout: default
+---
+
+{%- assign toate = site.intrari | sort: "date" -%}
+{%- assign pozitie = 0 -%}
+{%- for i in toate -%}
+  {%- if i.url == page.url -%}{%- assign pozitie = forloop.index0 -%}{%- endif -%}
+{%- endfor -%}
+{%- assign i_prec = pozitie | minus: 1 -%}
+{%- assign i_urm = pozitie | plus: 1 -%}
+{%- assign precedenta = nil -%}
+{%- if pozitie > 0 -%}{%- assign precedenta = toate[i_prec] -%}{%- endif -%}
+{%- assign urmatoarea = toate[i_urm] -%}
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <span>intrări</span>
+  <span class="separator">/</span>
+  <span class="curent">{{ page.title }}</span>
+</nav>
+
+<header class="antet-intrare tip--{{ page.tip | slugify }}">
+  <div class="intrare-meta">
+    <time class="data" datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d.%m.%Y" }}</time>
+    <span class="eticheta">{{ page.tip }}</span>
+    {%- if page.status %}
+    <span class="stare stare--{{ page.status | slugify }}">{{ page.status }}</span>
+    {%- endif %}
+  </div>
+  <h1>{{ page.title }}</h1>
+  {%- if page.rezumat %}
+  <p class="rezumat">{{ page.rezumat }}</p>
+  {%- endif %}
+</header>
+
+{%- if page.componente or page.commits.size > 0 or page.teste.size > 0 or page.tags.size > 0 %}
+<dl class="card-meta" aria-label="Metadate tehnice">
+  {%- if page.componente %}
+  <dt>componente</dt>
+  <dd><span class="jeton">{{ page.componente }}</span></dd>
+  {%- endif %}
+
+  {%- if page.commits.size > 0 %}
+  <dt>commit-uri</dt>
+  <dd>
+    {%- for c in page.commits -%}
+      {%- assign parti = c | split: "@" -%}
+      {%- if parti.size == 2 -%}
+    <a class="jeton" href="https://github.com/{{ site.github_user }}/{{ parti[0] }}/commit/{{ parti[1] }}"
+       rel="noopener"><span class="depozit">{{ parti[0] }}</span>{{ parti[1] | slice: 0, 7 }}</a>
+      {%- else -%}
+    <span class="jeton">{{ c }}</span>
+      {%- endif -%}
+    {%- endfor %}
+  </dd>
+  {%- endif %}
+
+  {%- if page.teste.size > 0 %}
+  <dt>teste de regresie</dt>
+  <dd>
+    {%- for t in page.teste %}
+    <span class="jeton">{{ t }}</span>
+    {%- endfor %}
+  </dd>
+  {%- endif %}
+
+  {%- if page.tags.size > 0 %}
+  <dt>teme</dt>
+  <dd>
+    {%- for tag in page.tags %}
+    <a class="jeton" href="{{ '/teme/' | append: tag | append: '/' | relative_url }}">#{{ tag }}</a>
+    {%- endfor %}
+  </dd>
+  {%- endif %}
+</dl>
+{%- endif %}
+
+{%- comment -%}
+  Corpul se taie pe H2 ca fiecare secţiune din contractul de conţinut să
+  primească propriul bloc vizual. Rolul vine din ID-ul explicit pus în şablon
+  ({#simptom}, {#cauza}, ...); fără el, secţiunea cade pe stilul generic.
+  Tăierea pe "<h2" e sigură: în blocurile de cod, "<" ajunge escapat ca &lt;.
+{%- endcomment -%}
+
+<article class="corp">
+  {%- assign bucati = content | split: "<h2" -%}
+  {%- for bucata in bucati -%}
+    {%- if forloop.first -%}
+      {%- assign preambul = bucata | strip -%}
+      {%- if preambul != "" %}
+  <section class="pas pas--preambul">{{ preambul }}</section>
+      {%- endif -%}
+    {%- else -%}
+      {%- assign atribute = bucata | split: '"' -%}
+      {%- assign rol = atribute[1] | default: "generic" %}
+  <section class="pas pas--{{ rol }}">
+    <h2{{ bucata }}
+  </section>
+    {%- endif -%}
+  {%- endfor %}
+</article>
+
+{%- if precedenta or urmatoarea %}
+<nav class="navigare" aria-label="Navigare între intrări">
+  {%- if precedenta %}
+  <a class="precedenta" href="{{ precedenta.url | relative_url }}" rel="prev">
+    <span class="directie">← mai vechi</span>
+    <span class="titlu-nav">{{ precedenta.title }}</span>
+  </a>
+  {%- else %}
+  <span></span>
+  {%- endif %}
+
+  {%- if urmatoarea %}
+  <a class="urmatoarea" href="{{ urmatoarea.url | relative_url }}" rel="next">
+    <span class="directie">mai nou →</span>
+    <span class="titlu-nav">{{ urmatoarea.title }}</span>
+  </a>
+  {%- endif %}
+</nav>
+{%- endif %}
