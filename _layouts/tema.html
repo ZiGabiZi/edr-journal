@@ -1,0 +1,46 @@
+---
+layout: default
+---
+
+{%- assign meta = site.data.teme | where: "nume", page.tema | first -%}
+{%- assign intrari_tema = site.intrari | where_exp: "i", "i.tags contains page.tema" | sort: "date" | reverse -%}
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <a href="{{ '/teme/' | relative_url }}">teme</a>
+  <span class="separator">/</span>
+  <span class="curent">#{{ page.tema }}</span>
+</nav>
+
+<header class="antet-tema">
+  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ grep -l '#{{ page.tema }}' intrari/*</p>
+  <h1>#{{ page.tema }}</h1>
+  {%- if meta.descriere %}
+  <p class="rezumat">{{ meta.descriere }}</p>
+  {%- endif %}
+  <p class="numar-intrari">{{ intrari_tema | size }}
+    {%- if intrari_tema.size == 1 %} intrare{% else %} intrări{% endif %}</p>
+</header>
+
+<main>
+  <div class="lista-intrari">
+    {%- for intrare in intrari_tema %}
+    {% include card-intrare.html intrare=intrare %}
+    {%- else %}
+    <p class="gol">// încă nimic pe tema asta</p>
+    {%- endfor %}
+  </div>
+</main>
+
+{%- assign celelalte = site.data.teme | where_exp: "t", "t.nume != page.tema" %}
+{%- if celelalte.size > 0 %}
+<nav class="alte-teme" aria-label="Celelalte teme">
+  <h2 class="sectiune-titlu">// celelalte teme</h2>
+  <ul class="taguri">
+    {%- for t in celelalte %}
+    <li><a href="{{ '/teme/' | append: t.nume | append: '/' | relative_url }}">#{{ t.nume }}</a></li>
+    {%- endfor %}
+  </ul>
+</nav>
+{%- endif %}

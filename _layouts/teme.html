@@ -1,0 +1,58 @@
+---
+layout: default
+---
+
+{%- assign taguri_folosite = site.intrari | map: "tags" | compact | join: "," | split: "," | uniq | sort -%}
+{%- assign nume_cunoscute = site.data.teme | map: "nume" -%}
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <span class="curent">teme</span>
+</nav>
+
+<header class="antet-tema">
+  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ ls teme/</p>
+  <h1>Teme</h1>
+  <p class="rezumat">Vocabularul închis de tag-uri al jurnalului. O temă nouă se
+  adaugă întâi în <code>_data/teme.yml</code>, abia apoi se folosește într-o intrare.</p>
+</header>
+
+{%- comment -%}
+  Verificarea care face vocabularul să fie contract, nu intenţie: orice tag
+  folosit într-o intrare dar absent din _data/teme.yml apare aici, vizibil.
+  Pe GitHub Pages nu pot rula un plugin de validare, deci validarea trăieşte
+  în pagină.
+{%- endcomment -%}
+{%- assign necunoscute_brut = "" -%}
+{%- for tag in taguri_folosite -%}
+  {%- unless nume_cunoscute contains tag -%}
+    {%- assign necunoscute_brut = necunoscute_brut | append: tag | append: "," -%}
+  {%- endunless -%}
+{%- endfor -%}
+{%- assign necunoscute = necunoscute_brut | split: "," -%}
+
+{%- if necunoscute.size > 0 %}
+<div class="avertisment" role="alert">
+  <strong>Tag-uri în afara vocabularului:</strong>
+  {% for tag in necunoscute %}<code>{{ tag }}</code>{% unless forloop.last %}, {% endunless %}{% endfor %}.
+  Adaugă-le în <code>_data/teme.yml</code> (plus un stub în <code>teme/</code>) sau corectează-le în intrări.
+</div>
+{%- endif %}
+
+<main>
+  <ul class="lista-teme">
+    {%- for tema in site.data.teme %}
+    {%- assign n = site.intrari | where_exp: "i", "i.tags contains tema.nume" | size %}
+    <li class="card-tema{% if n == 0 %} card-tema--goala{% endif %}">
+      <a href="{{ '/teme/' | append: tema.nume | append: '/' | relative_url }}">
+        <span class="card-tema-antet">
+          <span class="card-tema-nume">#{{ tema.nume }}</span>
+          <span class="card-tema-numar">{{ n }}</span>
+        </span>
+        <span class="card-tema-descriere">{{ tema.descriere }}</span>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</main>

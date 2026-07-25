@@ -1,0 +1,23 @@
+{%- comment -%}
+  Cardul unei intrări din listă. Folosit de pagina de acasă şi de paginile de temă.
+  Atributele data-* sunt punctele de agăţare ale filtrării client-side.
+{%- endcomment -%}
+<article class="intrare tip--{{ include.intrare.tip | slugify }}"
+         data-tip="{{ include.intrare.tip | slugify }}"
+         data-teme="{{ include.intrare.tags | join: ',' }}">
+  <div class="intrare-meta">
+    <time class="data" datetime="{{ include.intrare.date | date: '%Y-%m-%d' }}">{{ include.intrare.date | date: "%d.%m.%Y" }}</time>
+    <span class="eticheta">{{ include.intrare.tip }}</span>
+  </div>
+  <h3><a href="{{ include.intrare.url | relative_url }}">{{ include.intrare.title }}</a></h3>
+  {%- if include.intrare.rezumat %}
+  <p class="rezumat">{{ include.intrare.rezumat }}</p>
+  {%- endif %}
+  {%- if include.intrare.tags and include.intrare.tags.size > 0 %}
+  <ul class="taguri">
+    {%- for tag in include.intrare.tags %}
+    <li><a href="{{ '/teme/' | append: tag | append: '/' | relative_url }}">#{{ tag }}</a></li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+</article>

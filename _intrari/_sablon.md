@@ -27,36 +27,40 @@ status:              # rezolvat | partial | deschis
 <!-- ═══════════════════════════════════════════════════════════
      VARIANTA A — pentru `tip: incident`
      Șterge varianta B de mai jos.
+
+     NU șterge marcajele {#...} de după titluri. Ele dau layout-ului
+     rolul fiecărei secțiuni (culoare, formă, eticheta „respinsă").
+     Fără ele secțiunea se randează generic, dar nu se strică nimic.
      ═══════════════════════════════════════════════════════════ -->
 
-## Context
+## Context {#context}
 
 <!-- La ce lucrai și de ce. Ce parte a sistemului, în ce moment. -->
 
-## Simptom
+## Simptom {#simptom}
 
 <!-- Ce s-a văzut, concret: mesaj de eroare, log, comportament observat.
      Fără interpretare aici — doar ce era pe ecran. -->
 
-## Ce am crezut
+## Ce am crezut {#ipoteza}
 
 <!-- Ipoteza falsă, scrisă cinstit, plus de ce părea plauzibilă.
      Asta e partea care dă valoare jurnalului; nu o sări. -->
 
-## Cauza reală
+## Cauza reală {#cauza}
 
 <!-- Ce se întâmpla de fapt și cum ai ajuns de la ipoteză la cauză. -->
 
-## Soluția
+## Soluția {#solutia}
 
 <!-- Ce ai schimbat. Trimite la `commits` din front-matter. -->
 
-## Cum știu că e rezolvat
+## Cum știu că e rezolvat {#regresie}
 
 <!-- Testul de regresie sau verificarea manuală reproductibilă.
      Trimite la `teste` din front-matter. -->
 
-## Ce am învățat
+## Ce am învățat {#invatat}
 
 <!-- Regula generalizabilă, nu rezumatul fixului. -->
 
@@ -66,28 +70,28 @@ status:              # rezolvat | partial | deschis
      Șterge varianta A de mai sus.
      ═══════════════════════════════════════════════════════════ -->
 
-## Context
+## Context {#context}
 
 <!-- Situația care a impus o alegere. -->
 
-## Forța
+## Forța {#forta}
 
 <!-- Constrângerile aflate în tensiune: performanță vs. simplitate,
      livrare garantată vs. memorie, timp disponibil vs. corectitudine. -->
 
-## Alternative
+## Alternative {#alternative}
 
 <!-- Opțiunile respinse și motivul concret al respingerii. -->
 
-## Alegerea
+## Alegerea {#alegerea}
 
 <!-- Ce ai decis, formulat la timpul prezent: „Agentul scrie pe disc...". -->
 
-## Costul acceptat
+## Costul acceptat {#cost}
 
 <!-- Ce pierzi prin decizia asta. O decizie fără cost e o decizie
      nedocumentată. -->
 
-## Ce am învățat
+## Ce am învățat {#invatat}
 
 <!-- Ce ai afla mai devreme data viitoare. -->

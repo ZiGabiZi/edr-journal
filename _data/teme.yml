@@ -1,0 +1,33 @@
+# Vocabularul închis de tag-uri, ca sursă unică de adevăr.
+#
+# Adaugi o temă nouă aici ÎNTÂI, apoi o folosești în intrări. Orice tag
+# apărut într-o intrare dar absent de aici e semnalat pe /teme/ ca necunoscut.
+# La adăugarea unei teme, creează și fișierul stub `teme/<nume>.md`.
+
+- nume: retea
+  titlu: Rețea
+  descriere: Transport HTTP, timeout-uri, reîncercări, comportament la server indisponibil.
+
+- nume: concurenta
+  titlu: Concurență
+  descriere: Fire de execuție, stare partajată, ordonare, condiții de cursă.
+
+- nume: persistenta
+  titlu: Persistență
+  descriere: Ce supraviețuiește unei reporniri și ce se pierde — cozi, store-uri, scriere pe disc.
+
+- nume: identitate
+  titlu: Identitate
+  descriere: Cine e agentul și care e evenimentul — înregistrare, chei de deduplicare, corelare.
+
+- nume: observabilitate
+  titlu: Observabilitate
+  descriere: Loguri, contoare și stare vizibilă din afara procesului.
+
+- nume: pdp
+  titlu: PDP
+  descriere: Punctul de decizie al politicilor — regulile după care un eveniment devine alertă.
+
+- nume: infrastructura
+  titlu: Infrastructură
+  descriere: Tooling, build, publicare și mediul de dezvoltare.
