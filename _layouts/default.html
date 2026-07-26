@@ -519,6 +519,85 @@
     .alte-teme { padding-bottom: 56px; }
     .alte-teme .sectiune-titlu { margin-top: 0; }
 
+    /* ── Despre (afirmaţia tezei) ──────────── */
+    .pas--problema { --nod: var(--incident); }
+    .pas--invariant { --nod: var(--decizie); }
+    .pas--urmeaza { --nod: var(--infrastructura); }
+
+    .corp--despre .pas > h2 { font-size: 0.9rem; }
+
+    .corp--despre .pas p { max-width: 68ch; }
+
+    {%- comment -%}
+      Prefixul .corp--despre nu e decorativ: regulile generice `.pas blockquote`
+      şi `.pas ol` apar mai jos în foaie, la aceeaşi specificitate, deci fără el
+      ar câştiga ele prin ordine.
+    {%- endcomment -%}
+
+    /* Invariantul e afirmaţia centrală, nu un citat oarecare. */
+    .corp--despre .pas--invariant blockquote {
+      border-left: 3px solid var(--decizie);
+      background: rgba(139, 124, 246, 0.08);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 4px 0 20px;
+      color: var(--text);
+      font-style: normal;
+      font-size: 1.06rem;
+      line-height: 1.5;
+    }
+
+    /* Scara de divulgare: trepte numerotate, nu o listă oarecare. */
+    .corp--despre .pas--invariant ol {
+      counter-reset: treapta;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .corp--despre .pas--invariant ol li {
+      counter-increment: treapta;
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 10px;
+    }
+
+    .corp--despre .pas--invariant ol li::before {
+      content: counter(treapta);
+      position: absolute;
+      left: 0;
+      top: 1px;
+      width: 23px;
+      height: 23px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      color: var(--decizie);
+      border: 1px solid rgba(139, 124, 246, 0.4);
+      background: rgba(139, 124, 246, 0.08);
+      border-radius: 7px;
+    }
+
+    .legatura-teza {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(61, 220, 151, 0.35);
+      padding-bottom: 1px;
+    }
+
+    .legatura-teza:hover { border-bottom-color: var(--accent); }
+
+    .legatura-teza:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
     /* ── Parcurs (timeline din git log) ────── */
     .depozit--edr-agent { --ton: var(--componenta); }
     .depozit--edr-server { --ton: var(--infrastructura); }
@@ -1097,6 +1176,7 @@
       <span>© {{ site.time | date: "%Y" }} {{ site.author }}</span>
       <span>
         <a href="{{ '/' | relative_url }}">acasă</a> ·
+        <a href="{{ '/despre/' | relative_url }}">despre</a> ·
         <a href="{{ '/parcurs/' | relative_url }}">parcurs</a> ·
         <a href="{{ '/teme/' | relative_url }}">teme</a> ·
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a> · construit cu Jekyll
