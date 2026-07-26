@@ -1,0 +1,50 @@
+---
+layout: default
+---
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <span class="curent">despre</span>
+</nav>
+
+<header class="antet-tema">
+  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ cat de-ce.md</p>
+  <h1>{{ page.title }}</h1>
+  {%- if page.rezumat %}
+  <p class="rezumat">{{ page.rezumat }}</p>
+  {%- endif %}
+</header>
+
+{%- comment -%}
+  Aceeaşi tăiere pe H2 ca la intrări, ca cele trei afirmaţii să primească
+  fiecare blocul ei vizual. Rolurile vin din ID-urile explicite din despre.md.
+{%- endcomment -%}
+<article class="corp corp--despre">
+  {%- assign bucati = content | split: "<h2" -%}
+  {%- for bucata in bucati -%}
+    {%- if forloop.first -%}
+      {%- assign preambul = bucata | strip -%}
+      {%- if preambul != "" %}
+  <section class="pas pas--preambul">{{ preambul }}</section>
+      {%- endif -%}
+    {%- else -%}
+      {%- assign atribute = bucata | split: '"' -%}
+      {%- assign rol = atribute[1] | default: "generic" %}
+  <section class="pas pas--{{ rol }}">
+    <h2{{ bucata }}
+  </section>
+    {%- endif -%}
+  {%- endfor %}
+</article>
+
+<nav class="navigare" aria-label="Mai departe">
+  <a class="precedenta" href="{{ '/' | relative_url }}">
+    <span class="directie">← jurnalul</span>
+    <span class="titlu-nav">Intrările, în ordine cronologică</span>
+  </a>
+  <a class="urmatoarea" href="{{ '/parcurs/' | relative_url }}" >
+    <span class="directie">parcursul →</span>
+    <span class="titlu-nav">Istoricul complet al codului</span>
+  </a>
+</nav>
