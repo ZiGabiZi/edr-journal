@@ -8,7 +8,7 @@
 # ── OBLIGATORIU ──────────────────────────────────────────────
 title:
 date: 2026-07-25
-tip: incident        # incident | decizie
+tip: incident        # incident | decizie | corectie
 rezumat:             # o singură frază — apare pe pagina de index
 tags: []             # vocabular ÎNCHIS, doar din lista de mai jos:
                      #   retea, concurenta, persistenta, identitate,
@@ -67,7 +67,7 @@ status:              # rezolvat | partial | deschis
 
 <!-- ═══════════════════════════════════════════════════════════
      VARIANTA B — pentru `tip: decizie`
-     Șterge varianta A de mai sus.
+     Șterge celelalte două variante.
      ═══════════════════════════════════════════════════════════ -->
 
 ## Context {#context}
@@ -95,3 +95,38 @@ status:              # rezolvat | partial | deschis
 ## Ce am învățat {#invatat}
 
 <!-- Ce ai afla mai devreme data viitoare. -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     VARIANTA C — pentru `tip: corectie`
+     O decizie anterioară care s-a dovedit greșită și a fost revizuită.
+     Nu e incident (nimic nu s-a stricat) și nu e o decizie nouă —
+     e o decizie veche, corectată pe baza unui contra-exemplu.
+     Șterge celelalte două variante.
+     ═══════════════════════════════════════════════════════════ -->
+
+## Decizia originală {#originala}
+
+<!-- Ce ai decis prima dată, când, și cu ce commit. Formulează-o cinstit,
+     ca pe o decizie rezonabilă — pentru că atunci chiar era. -->
+
+## Raționamentul de atunci {#rationament}
+
+<!-- De ce părea corectă. Ce constrângeri o justificau. Fără ironie
+     retrospectivă: dacă decizia veche pare stupidă aici, ai scris-o prost. -->
+
+## Ce nu vedeam {#gol}
+
+<!-- Contra-exemplul concret care sparge mecanismul original. Cazul precis,
+     nu o îngrijorare vagă. Dacă există un test care îl documentează,
+     numește-l — el e dovada că golul e real, nu presupus. -->
+
+## Ce am schimbat {#schimbat}
+
+<!-- Noul mecanism și de ce nu are aceeași gaură. -->
+
+## Ce a rămas valid {#ramas}
+
+<!-- Partea din decizia originală care a supraviețuit, și în ce rol.
+     Secțiunea asta contează cel mai mult: o revizuire care aruncă tot
+     e de obicei semn că n-ai înțeles nici prima, nici a doua oară. -->

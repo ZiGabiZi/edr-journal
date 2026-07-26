@@ -29,6 +29,7 @@
       --accent-slab: rgba(61, 220, 151, 0.12);
       --incident: #ff5c7a;
       --decizie: #8b7cf6;
+      --corectie: #e8c547;
       --bug: #ffb454;
       --componenta: #3ddc97;
       --infrastructura: #4cc9f0;
@@ -251,15 +252,14 @@
        `--ton` este culoarea temei tipului, citită mai jos de layout-ul de intrare. */
     .tip--incident { --ton: var(--incident); }
     .tip--decizie { --ton: var(--decizie); }
+    .tip--corectie { --ton: var(--corectie); }
     .tip--bug { --ton: var(--bug); }
     .tip--componenta { --ton: var(--componenta); }
     .tip--infrastructura { --ton: var(--infrastructura); }
 
-    .intrare.tip--incident,
-    .intrare.tip--decizie,
-    .intrare.tip--bug,
-    .intrare.tip--componenta,
-    .intrare.tip--infrastructura { border-left-color: var(--ton); }
+    /* Selector pe atribut + rezervă explicită: un tip nou capătă culoarea
+       doar adăugând un `--ton` mai sus, iar unul necunoscut nu strică nimic. */
+    .intrare[class*="tip--"] { border-left-color: var(--ton, var(--text-sters)); }
 
     .intrare[class*="tip--"] .eticheta {
       color: var(--ton);
@@ -942,6 +942,12 @@
     .pas--alegerea { --nod: var(--decizie); }
     .pas--cost { --nod: var(--bug); }
 
+    /* Corecţie: originala rămâne o decizie, golul e locul unde s-a rupt. */
+    .pas--originala { --nod: var(--decizie); }
+    .pas--rationament { --nod: var(--text-sters); }
+    .pas--gol { --nod: var(--incident); }
+    .pas--schimbat { --nod: var(--corectie); }
+
     /* Ce a fost respins se citeşte altfel decât ce a rămas în picioare. */
     .pas--ipoteza,
     .pas--alternative {
@@ -953,7 +959,8 @@
     .pas--alternative > *:not(h2) { color: var(--text-sters); }
 
     .pas--ipoteza > h2::after,
-    .pas--alternative > h2::after {
+    .pas--alternative > h2::after,
+    .pas--gol > h2::after {
       font-size: 0.68rem;
       letter-spacing: 0.06em;
       text-transform: none;
@@ -966,9 +973,12 @@
 
     .pas--ipoteza > h2::after { content: "respinsă"; }
     .pas--alternative > h2::after { content: "respinse"; }
+    .pas--gol > h2::after { content: "contra-exemplu"; }
 
-    /* Concluzia e destinaţia, nu un pas pe drum. */
-    .pas--invatat {
+    /* Concluzia e destinaţia, nu un pas pe drum. La corecţii, rolul ăsta
+       îl are ce a supravieţuit din decizia veche. */
+    .pas--invatat,
+    .pas--ramas {
       border-left-color: transparent;
       background: var(--accent-slab);
       border: 1px solid rgba(61, 220, 151, 0.22);
@@ -978,7 +988,8 @@
       --nod: var(--accent);
     }
 
-    .pas--invatat::before { display: none; }
+    .pas--invatat::before,
+    .pas--ramas::before { display: none; }
 
     .pas p, .pas ul, .pas ol, .pas blockquote,
     .pas pre, .pas table, .pas figure { margin-bottom: 16px; }
