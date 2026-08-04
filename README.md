@@ -109,19 +109,19 @@ descriptiv, cu cratime, fără diacritice.
 title: Evenimentele dispăreau când serverul era oprit
 date: 2026-07-20
 tip: incident
-status: rezolvat
-componente: [agent, server]
 rezumat: Evenimentele de fișier erau trimise fire-and-forget; orice eșec de transport le pierdea definitiv.
 tags: [persistenta, retea]
-commits:
-  - repo: edr-agent
-    hash: a1b2c3d
-  - repo: edr-server
-    hash: e4f5g6h
-teste:
-  - test_duplicate_client_event_id_is_idempotent
+capitol: "3.2"
+componente: ambele
+commits: [edr-agent@a1b2c3d, edr-server@e4f5g6h]
+teste: [app/tests/test_idempotenta.py::test_duplicate_client_event_id_is_idempotent]
+status: rezolvat
 ---
 ```
+
+`commits` și `teste` sunt liste plate, nu structuri imbricate — layout-ul de intrare
+sparge fiecare element de `commits` pe `@` ca să construiască link-ul către GitHub, deci
+formatul `repo@hash` e obligatoriu.
 
 **3.** Scrie corpul respectând H2-urile fixe ale tipului ales. Structura constantă e ce
 face jurnalul parcurgibil de cineva care sare direct la mijloc.
@@ -135,20 +135,32 @@ face jurnalul parcurgibil de cineva care sare direct la mijloc.
 | `tip` | da | `incident` \| `decizie` |
 | `rezumat` | da | o singură frază, apare în listă |
 | `tags` | da | vocabular controlat (vezi mai jos) |
+| `capitol` | nu | secțiunea din `_data/capitole.yml`, ex. `"3.2"` |
 | `status` | nu | `rezolvat` \| `partial` \| `deschis` |
-| `componente` | nu | `agent` \| `server` \| ambele |
-| `commits` | nu | listă de `{repo, hash}` |
-| `teste` | nu | numele testelor de regresie |
+| `componente` | nu | `agent` \| `server` \| `ambele` |
+| `commits` | nu | listă de `repo@hash` |
+| `teste` | nu | listă de `cale::nume_test` |
 
 ### Vocabular de tag-uri
 
 Listă închisă, deliberat. Fără disciplina asta se ajunge rapid la `retea`, `network` și
 `rețea` ca trei tag-uri distincte:
 
-`retea` · `concurenta` · `persistenta` · `identitate` · `observabilitate` · `pdp` ·
-`analiza-statica` · `infrastructura`
+Sursa unică de adevăr e `_data/teme.yml`, nu lista de aici. Un tag folosit într-o intrare
+dar absent de acolo e semnalat vizibil pe `/teme/`.
 
-Un tag nou se adaugă doar dacă apare a treia oară — până atunci, încape în cele existente.
+`retea` · `concurenta` · `persistenta` · `identitate` · `observabilitate` · `detectie` ·
+`pdp` · `infrastructura`
+
+Un tag nou se adaugă întâi în `_data/teme.yml` (plus un stub în `teme/`), abia apoi se
+folosește într-o intrare.
+
+### Legătura cu lucrarea
+
+`capitol` leagă intrarea de secțiunea din Capitolul 3 pe care o susține. Secțiunile sunt
+definite în `_data/capitole.yml`, iar `/capitole/` arată lanțul în ambele sensuri: ce
+intrări susțin o secțiune și — mai important — care secțiuni n-au încă niciun suport
+scris. O intrare fără `capitol` apare acolo ca nemapată.
 
 ---
 
@@ -196,10 +208,24 @@ python scripts/genereaza_timeline.py
 ```
 
 Scriptul citește `git log` din `edr-agent` și `edr-server` și rescrie
-`_data/commits.json`. Rulează-l după fiecare sesiune de lucru semnificativă.
+`_data/commits.json`.
 
 Efectul secundar util: jurnalul își generează singur backlog-ul — commit-urile
 nemarcate sunt exact poveștile care așteaptă să fie scrise.
+
+**Fișierul se comite.** GitHub Pages nu rulează scriptul, deci timeline-ul de pe site e
+la fel de proaspăt ca ultima rulare comisă. Ca să nu depindă de memorie, instalează
+hook-ul de pre-commit — regenerează și include fișierul la fiecare commit:
+
+```bash
+cp scripts/hook-pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+```
+
+Un pas echivalent în GitHub Actions nu funcționează fără muncă disproporționată:
+scriptul are nevoie de istoricul celor două repo-uri de cod, care în CI ar trebui clonate
+separat, cu token dacă sunt private, iar build-ul implicit de Pages ar trebui înlocuit cu
+un workflow propriu. Regenerarea aparține singurului loc unde există toate trei
+repo-urile — mașina de lucru.
 
 ---
 

@@ -4,6 +4,7 @@ date: 2026-07-02
 tip: incident
 rezumat: Rutele scrise ca `def` simplu rulează pe fire diferite, deci store-urile din memorie erau citite și scrise concurent. Un `RuntimeError` zgomotos m-a trimis după o clasă întreagă de curse tăcute, inclusiv ID-uri de evenimente duplicate derivate din lungimea listei.
 tags: [concurenta, identitate]
+capitol: "3.6"
 componente: server
 commits: [edr-server@c49cef8, edr-server@cf19587]
 teste: [app/tests/test_agent_service_concurrency.py::test_concurrent_register_and_read_does_not_corrupt_store, app/tests/test_agent_service_concurrency.py::test_concurrent_heartbeats_are_atomic]

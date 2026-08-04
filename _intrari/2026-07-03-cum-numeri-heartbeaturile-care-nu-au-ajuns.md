@@ -4,6 +4,7 @@ date: 2026-07-03
 tip: decizie
 rezumat: Serverul știa doar când a văzut ultima oară un agent, deci o bătaie pierdută nu lăsa nicio urmă. Am pus agentul să-și numeroteze bătăile, ca absența unui mesaj să devină o valoare pe care serverul o poate citi.
 tags: [observabilitate, retea, identitate]
+capitol: "3.4"
 componente: ambele
 commits: [edr-agent@46fd833, edr-server@ad808b0]
 teste: [app/tests/test_heartbeat_sequence.py::test_sequence_gap_counts_missed_heartbeats, app/tests/test_heartbeat_sequence.py::test_monotonic_sequence_is_normal, app/tests/test_heartbeat_sequence.py::test_first_sequence_sets_baseline_without_restart, app/tests/test_heartbeat_sequence.py::test_legacy_heartbeat_without_sequence_is_backward_compatible]

@@ -4,6 +4,7 @@ date: 2026-08-04
 tip: decizie
 rezumat: Garda de curățare a debouncer-ului rulează cel mult o dată la 60 de secunde, deci nu se poate declanșa în interiorul unei rafale mai scurte de atât. Dimensiunea se întoarce ca plafon dur cu evacuare LRU — mecanism separat, O(1), nu o a treia variantă de operator boolean.
 tags: [concurenta, detectie]
+capitol: "3.1"
 componente: agent
 commits: [edr-agent@61a5bb5]
 teste: [tests/test_event_debouncer.py::test_dictionary_never_exceeds_the_cap_during_a_burst, tests/test_event_debouncer.py::test_reseeing_a_key_protects_it_from_eviction, tests/test_event_debouncer.py::test_ordering_survives_a_cleanup_pass]

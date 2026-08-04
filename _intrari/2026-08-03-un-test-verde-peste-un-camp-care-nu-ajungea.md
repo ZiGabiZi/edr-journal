@@ -4,6 +4,7 @@ date: 2026-08-03
 tip: incident
 rezumat: Agentul trimitea `agents_instance_id`, serverul citea `agent_instance_id`. Pydantic aruncă tăcut cheile necunoscute, deci detecția de repornire nu s-a declanșat niciodată în producție — în timp ce testele de pe server o verificau și treceau.
 tags: [identitate, observabilitate]
+capitol: "3.3"
 componente: ambele
 commits: [edr-agent@7af36f5]
 teste: [tests/test_heartbeat_payload.py::test_payload_carries_instance_id_under_the_key_the_server_reads, tests/test_heartbeat_payload.py::test_payload_has_no_key_the_server_would_silently_drop, tests/test_heartbeat_payload.py::test_loop_sends_incrementing_sequence_with_instance_id]

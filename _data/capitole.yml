@@ -1,0 +1,38 @@
+# Secțiunile Capitolului 3 al lucrării, ca sursă unică de adevăr.
+#
+# Jurnalul are dublu rol: log de inginerie și materie primă pentru lucrare.
+# Câmpul `capitol` din front-matter-ul unei intrări o leagă de secțiunea pe care
+# o susține, iar pagina /capitole/ arată lanțul de proveniență în ambele sensuri:
+# ce intrări susțin o secțiune și — mai important — care secțiuni n-au încă
+# niciun suport scris.
+#
+# O secțiune nouă se adaugă aici întâi, apoi se folosește într-o intrare.
+# O intrare fără `capitol` e semnalată pe /capitole/ ca nemapată.
+
+- nume: "3.1"
+  titlu: Observarea pe endpoint
+  descriere: Ce ajunge să fie văzut local — acoperirea configurată, evenimentele de fișier care contează și cele suprimate ca zgomot.
+
+- nume: "3.2"
+  titlu: Livrarea garantată a evenimentelor
+  descriere: Separarea detecției de transmisie, coada durabilă și semantica at-least-once cu deduplicare la recepție.
+
+- nume: "3.3"
+  titlu: Identitatea agentului și a evenimentului
+  descriere: Cine e mașina, care încarnare a procesului raportează și cum se recunoaște un eveniment retransmis.
+
+- nume: "3.4"
+  titlu: Continuitate și stare observabilă
+  descriere: Cum se derivă starea de viață a unui endpoint și cum devine numărabilă absența unui mesaj.
+
+- nume: "3.5"
+  titlu: Reziliență la indisponibilitatea serverului
+  descriere: Comportamentul parcului când punctul central lipsește — reîncercare, desincronizare, ordinea de inițializare.
+
+- nume: "3.6"
+  titlu: Integritatea stării pe server
+  descriere: Structurile partajate ale serverului sub cereri concurente și invarianții pe care trebuie să-i păstreze.
+
+- nume: "3.7"
+  titlu: Canalul de control și drumul spre PDP
+  descriere: Direcția server-agent, directivele purtate de heartbeat și mecanismul pe care se va sprijini divulgarea progresivă.
