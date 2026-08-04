@@ -4,6 +4,7 @@ date: 2026-06-24
 tip: incident
 rezumat: Monitorizarea asculta `on_created` și `on_modified`. Un fișier adus de pe stick sau din Downloads pe același volum nu produce niciunul dintre ele — produce o redenumire, raportată doar directorului sursă.
 tags: [detectie]
+capitol: "3.1"
 componente: agent
 commits: [edr-agent@719268c]
 teste: []

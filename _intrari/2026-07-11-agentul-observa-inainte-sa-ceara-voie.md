@@ -4,6 +4,7 @@ date: 2026-07-11
 tip: decizie
 rezumat: Monitorizarea locală pornea doar după ce serverul confirma înregistrarea, deci un server indisponibil la boot lăsa endpoint-ul complet neobservat. Am inversat ordinea — discul local întâi, rețeaua după — pentru că înregistrarea nu-i dă agentului nimic din ce-i trebuie ca să observe.
 tags: [retea, persistenta]
+capitol: "3.5"
 componente: agent
 commits: [edr-agent@d495321, edr-agent@d6b7cb0, edr-agent@ac2a9b7]
 teste: [tests/test_agent_startup.py::test_local_monitoring_starts_before_the_server_is_contacted, tests/test_agent_startup.py::test_monitoring_survives_a_server_that_never_answers, tests/test_agent_startup.py::test_startup_event_is_queued_before_the_server_is_reachable, tests/test_agent_startup.py::test_keeps_retrying_past_the_warning_threshold, tests/test_config_loader.py::test_default_config_path_is_independent_of_working_directory]

@@ -4,6 +4,7 @@ date: 2026-07-01
 tip: incident
 rezumat: Câmpul status era scris la înregistrare și la fiecare heartbeat, dar nimic nu-l scria înapoi când agentul murea — pentru că moartea unui proces nu produce nicio scriere. L-am scos din store și l-am mutat în calcul, derivat la citire din vechimea lui last_seen.
 tags: [observabilitate]
+capitol: "3.4"
 componente: server
 commits: [edr-server@f560c26]
 teste: [app/tests/test_agent_routes_integration.py::test_stale_agent_becomes_offline_without_new_heartbeat, app/tests/test_agent_routes_integration.py::test_internal_store_status_is_not_overwritten_by_derived_view, app/tests/test_agent_routes_integration.py::test_heartbeat_revives_offline_agent, app/tests/test_agent_status_unit.py::test_long_dead_agent_is_offline, app/tests/test_agent_status_unit.py::test_at_stale_threshold_is_degraded]

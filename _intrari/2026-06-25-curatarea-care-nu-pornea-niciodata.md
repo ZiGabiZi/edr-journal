@@ -4,6 +4,7 @@ date: 2026-06-25
 tip: incident
 rezumat: Garda care decidea când se curăță dicționarul debouncer-ului combina o limită de frecvență cu un prag de dimensiune. Cu AND, curățarea era imposibilă sub prag; cu OR, se executa la fiecare eveniment peste prag. Niciunul dintre operatori nu era răspunsul.
 tags: [concurenta]
+capitol: "3.1"
 componente: agent
 commits: [edr-agent@bcf300c, edr-agent@e08c798, edr-agent@87af315, edr-agent@61a5bb5]
 teste: [tests/test_event_debouncer.py::test_cleanup_runs_even_when_the_dictionary_stays_small, tests/test_event_debouncer.py::test_cleanup_body_is_rate_limited_regardless_of_event_volume, tests/test_event_debouncer.py::test_pass_drops_entries_older_than_two_intervals_and_keeps_newer]

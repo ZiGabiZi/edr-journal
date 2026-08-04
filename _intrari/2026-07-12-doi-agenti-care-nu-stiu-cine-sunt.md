@@ -4,6 +4,7 @@ date: 2026-07-12
 tip: corectie
 rezumat: Deduplicarea la înregistrare compara hash-ul mașinii cu `==`, iar o mașină care nu se poate identifica trimite `None`. Trei încercări mai târziu, regula nu mai întreabă cât de tare e identificatorul, ci despre ce anume e o afirmație.
 tags: [identitate]
+capitol: "3.3"
 componente: server
 commits: [edr-server@c49cef8, edr-server@e7f67c4, edr-server@382cd49, edr-server@b218b0d]
 teste: [app/tests/test_agent_routes_integration.py::test_agents_without_machine_id_hash_do_not_collide, app/tests/test_agent_routes_integration.py::test_fallback_machine_id_type_still_participates_in_dedup, app/tests/test_agent_routes_integration.py::test_same_hash_different_machine_id_type_is_not_merged, app/tests/test_agent_routes_integration.py::test_reregister_with_same_machine_id_merges_onto_existing_record]

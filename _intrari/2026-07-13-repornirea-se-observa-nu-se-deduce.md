@@ -4,6 +4,7 @@ date: 2026-07-13
 tip: corectie
 rezumat: Derivasem repornirea din regresia contorului de secvență. Regresia e un simptom al repornirii, nu definiția ei — și simptomele au și fals-negative, și fals-pozitive.
 tags: [identitate, observabilitate, retea]
+capitol: "3.3"
 componente: ambele
 commits: [edr-server@ad808b0, edr-server@476fade, edr-server@e993733, edr-agent@4a25c36]
 teste: [app/tests/test_heartbeat_sequence.py::test_restart_detected_even_when_sequence_is_higher, app/tests/test_heartbeat_sequence.py::test_equal_sequence_same_instance_is_duplicate_not_restart, app/tests/test_heartbeat_sequence.py::test_sequence_gap_counts_missed_heartbeats]

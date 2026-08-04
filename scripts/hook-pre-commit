@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Hook de pre-commit: regenerează _data/commits.json și îl include în commit.
+# ==========================================================================
+#
+# De ce hook local și nu un pas în GitHub Actions:
+#     Scriptul citește `git log` din edr-agent și edr-server, care sunt repo-uri
+#     surori pe disc. În CI ele nu există — ar trebui clonate acolo, cu token
+#     dacă sunt private, iar build-ul implicit de GitHub Pages ar trebui înlocuit
+#     cu un workflow propriu. Regenerarea trebuie să se întâmple în singurul loc
+#     unde există toate trei repo-urile: mașina pe care se scrie codul.
+#
+# Instalare (o singură dată, din rădăcina jurnalului):
+#     cp scripts/hook-pre-commit .git/hooks/pre-commit
+#     chmod +x .git/hooks/pre-commit
+#
+# Hook-ul nu blochează niciodată un commit: dacă python lipsește sau repo-urile
+# de cod nu sunt la locul lor, avertizează și lasă commit-ul să treacă. Un
+# timeline vechi e o problemă mai mică decât un commit imposibil de făcut.
+
+RADACINA=$(git rev-parse --show-toplevel)
+SCRIPT="$RADACINA/scripts/genereaza_timeline.py"
+
+[ -f "$SCRIPT" ] || exit 0
+
+PYTHON=$(command -v python3 || command -v python)
+if [ -z "$PYTHON" ]; then
+    echo "pre-commit: python negăsit — _data/commits.json rămâne neschimbat." >&2
+    exit 0
+fi
+
+if ! "$PYTHON" "$SCRIPT" >/dev/null 2>&1; then
+    echo "pre-commit: genereaza_timeline.py a eșuat (repo-uri de cod absente?)." >&2
+    echo "            _data/commits.json rămâne neschimbat; commit-ul continuă." >&2
+    exit 0
+fi
+
+if ! git diff --quiet -- "$RADACINA/_data/commits.json"; then
+    git add "$RADACINA/_data/commits.json"
+    echo "pre-commit: _data/commits.json regenerat și adăugat în commit."
+fi
+
+exit 0

@@ -4,6 +4,7 @@ date: 2026-07-12
 tip: decizie
 rezumat: Detecția și livrarea erau același lucru, așa că orice server picat însemna evenimente pierdute definitiv. Le-am separat printr-o coadă SQLite, cu tot ce atrage după sine semantica at-least-once.
 tags: [persistenta, retea, concurenta, identitate]
+capitol: "3.2"
 componente: ambele
 commits: [edr-agent@ed3cee6, edr-agent@bab4817, edr-agent@0eab4d9, edr-agent@f40ff46, edr-agent@457d17d, edr-server@382cd49]
 teste: [app/tests/test_duplicate_client_event_id_is_idempotent.py::test_duplicate_client_event_id_is_idempotent, app/tests/test_duplicate_client_event_id_is_idempotent.py::test_event_without_client_id_still_accepted]

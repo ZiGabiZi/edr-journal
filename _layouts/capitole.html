@@ -1,0 +1,127 @@
+---
+layout: default
+---
+
+{%- assign nume_cunoscute = site.data.capitole | map: "nume" -%}
+{%- assign toate = site.intrari | sort: "date" -%}
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <span class="curent">capitole</span>
+</nav>
+
+<header class="antet-tema">
+  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ grep -r "^capitol:" _intrari/</p>
+  <h1>Capitole</h1>
+  <p class="rezumat">Jurnalul are dublu rol: log de inginerie și materie primă pentru
+  Capitolul 3. Pagina asta arată lanțul de proveniență în ambele sensuri — ce intrări
+  susțin o secțiune și care secțiuni n-au încă niciun suport scris.</p>
+</header>
+
+{%- comment -%}
+  Aceeaşi idee ca la /teme/: validarea trăieşte în pagină, fiindcă pe GitHub
+  Pages nu pot rula un plugin. Două verificări — intrări nemapate şi secţiuni
+  cu nume necunoscut — ca legătura să fie contract, nu intenţie.
+{%- endcomment -%}
+{%- assign nemapate = toate | where_exp: "i", "i.capitol == nil" -%}
+{%- assign necunoscute_brut = "" -%}
+{%- for intrare in toate -%}
+  {%- if intrare.capitol -%}
+    {%- unless nume_cunoscute contains intrare.capitol -%}
+      {%- assign necunoscute_brut = necunoscute_brut | append: intrare.capitol | append: "," -%}
+    {%- endunless -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign necunoscute = necunoscute_brut | split: "," | uniq -%}
+
+{%- if nemapate.size > 0 %}
+<div class="avertisment" role="alert">
+  <strong>Intrări fără capitol:</strong>
+  {% for i in nemapate %}<a href="{{ i.url | relative_url }}"><code>{{ i.title }}</code></a>{% unless forloop.last %}, {% endunless %}{% endfor %}.
+  Adaugă un câmp <code>capitol:</code> în front-matter.
+</div>
+{%- endif %}
+
+{%- if necunoscute.size > 0 %}
+<div class="avertisment" role="alert">
+  <strong>Secțiuni în afara listei:</strong>
+  {% for c in necunoscute %}<code>{{ c }}</code>{% unless forloop.last %}, {% endunless %}{% endfor %}.
+  Adaugă-le în <code>_data/capitole.yml</code> sau corectează-le în intrări.
+</div>
+{%- endif %}
+
+<main>
+  {%- assign mapate = toate | where_exp: "i", "i.capitol" | size %}
+  <p class="rezumat-capitole">
+    <strong>{{ mapate }}</strong> din {{ toate.size }} intrări sunt legate de o secțiune.
+  </p>
+
+  {%- for capitol in site.data.capitole %}
+  {%- assign intrari_sectiune = toate | where: "capitol", capitol.nume %}
+  <section class="sectiune-capitol{% if intrari_sectiune.size == 0 %} sectiune-capitol--goala{% endif %}"
+           id="sectiunea-{{ capitol.nume | replace: '.', '-' }}">
+    <header class="antet-sectiune">
+      <h2>
+        <span class="numar-sectiune">{{ capitol.nume }}</span>
+        {{ capitol.titlu }}
+        <span class="card-tema-numar">{{ intrari_sectiune.size }}</span>
+      </h2>
+      <p class="card-tema-descriere">{{ capitol.descriere }}</p>
+    </header>
+
+    {%- if intrari_sectiune.size > 0 %}
+    <div class="lista-intrari">
+      {%- for intrare in intrari_sectiune %}
+      {%- include card-intrare.html intrare=intrare %}
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="fara-suport">Nicio intrare încă. Secțiunea asta se scrie fără materie primă.</p>
+    {%- endif %}
+  </section>
+  {%- endfor %}
+</main>
+
+<style>
+  .rezumat-capitole {
+    color: var(--text-sters);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .sectiune-capitol { margin-bottom: 3rem; }
+
+  .antet-sectiune h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .numar-sectiune {
+    font-family: var(--mono, monospace);
+    color: var(--accent);
+  }
+
+  .antet-sectiune .card-tema-descriere {
+    display: block;
+    margin-bottom: 1.2rem;
+    max-width: 72ch;
+  }
+
+  /* O secţiune goală nu e o eroare, e backlog — de aceea e estompată,
+     nu semnalată în roşu ca avertismentele de mai sus. */
+  .sectiune-capitol--goala { opacity: 0.62; }
+
+  .fara-suport {
+    border-left: 2px solid var(--text-sters);
+    padding-left: 0.9rem;
+    color: var(--text-sters);
+    font-size: 0.9rem;
+  }
+
+  .lista-intrari { display: grid; gap: 1rem; }
+</style>

@@ -4,6 +4,7 @@ date: 2026-06-26
 tip: decizie
 rezumat: Toți agenții reîncercau la exact același interval, deci revenirea serverului îi aducea înapoi în același val. Am derivat faza de reconectare a fiecărui agent din hash-ul identității lui, ca distribuția să apară fără niciun mesaj schimbat între ei.
 tags: [retea, identitate, concurenta]
+capitol: "3.5"
 componente: agent
 commits: [edr-agent@69ccc1e, edr-agent@8e10ff8]
 teste: []
