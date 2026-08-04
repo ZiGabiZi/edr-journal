@@ -24,6 +24,10 @@
   titlu: Observabilitate
   descriere: Loguri, contoare și stare vizibilă din afara procesului.
 
+- nume: detectie
+  titlu: Detecție
+  descriere: Ce ajunge să fie observat pe endpoint și ce trece neobservat — evenimente de fișier, filtrare, suprimare, goluri de acoperire.
+
 - nume: pdp
   titlu: PDP
   descriere: Punctul de decizie al politicilor — regulile după care un eveniment devine alertă.
