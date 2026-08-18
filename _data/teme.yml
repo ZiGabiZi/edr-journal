@@ -8,6 +8,10 @@
   titlu: Rețea
   descriere: Transport HTTP, timeout-uri, reîncercări, comportament la server indisponibil.
 
+- nume: contract
+  titlu: Contract
+  descriere: Ce își promit agentul și serverul pe fir și cum se verifică promisiunea — nume de câmpuri, obligativitate, invariante interzise.
+
 - nume: concurenta
   titlu: Concurență
   descriere: Fire de execuție, stare partajată, ordonare, condiții de cursă.

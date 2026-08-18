@@ -149,8 +149,8 @@ Listă închisă, deliberat. Fără disciplina asta se ajunge rapid la `retea`, 
 Sursa unică de adevăr e `_data/teme.yml`, nu lista de aici. Un tag folosit într-o intrare
 dar absent de acolo e semnalat vizibil pe `/teme/`.
 
-`retea` · `concurenta` · `persistenta` · `identitate` · `observabilitate` · `detectie` ·
-`pdp` · `infrastructura`
+`retea` · `contract` · `concurenta` · `persistenta` · `identitate` ·
+`observabilitate` · `detectie` · `pdp` · `infrastructura`
 
 Un tag nou se adaugă întâi în `_data/teme.yml` (plus un stub în `teme/`), abia apoi se
 folosește într-o intrare.

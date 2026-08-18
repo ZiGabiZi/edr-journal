@@ -36,3 +36,7 @@
 - nume: "3.7"
   titlu: Canalul de control și drumul spre PDP
   descriere: Direcția server-agent, directivele purtate de heartbeat și mecanismul pe care se va sprijini divulgarea progresivă.
+
+- nume: "3.8"
+  titlu: Contractul dintre componente
+  descriere: Ce garantează fiecare parte celeilalte când cele două repo-uri se pot schimba separat — și în ce moment se descoperă încălcarea.

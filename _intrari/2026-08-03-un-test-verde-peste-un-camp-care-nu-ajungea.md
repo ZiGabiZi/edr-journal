@@ -3,7 +3,7 @@ title: Un test verde peste un câmp care nu ajungea niciodată
 date: 2026-08-03
 tip: incident
 rezumat: Agentul trimitea `agents_instance_id`, serverul citea `agent_instance_id`. Pydantic aruncă tăcut cheile necunoscute, deci detecția de repornire nu s-a declanșat niciodată în producție — în timp ce testele de pe server o verificau și treceau.
-tags: [identitate, observabilitate]
+tags: [contract, identitate, observabilitate]
 capitol: "3.3"
 componente: ambele
 commits: [edr-agent@7af36f5]
