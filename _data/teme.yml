@@ -30,7 +30,7 @@
 
 - nume: pdp
   titlu: PDP
-  descriere: Punctul de decizie al politicilor — regulile după care un eveniment devine alertă.
+  descriere: Protocol de divulgare progresivă — divulgarea în trepte a datelor despre un fișier, guvernată de banda de incertitudine.
 
 - nume: infrastructura
   titlu: Infrastructură

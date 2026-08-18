@@ -24,7 +24,7 @@ detecție sunt exact cele care nu le pot adopta.
 ## Invariantul {#invariant}
 
 Sistemul inversează implicitul: analiza merge la fișier, nu fișierul la
-analiză. Endpointul devine punctul unde se decide (*policy decision point*),
+analiză. Endpointul devine punctul unde se decide,
 nu doar punctul de unde se raportează. Regulile coboară la agent, verdictul se
 calculează local, iar spre server urcă strictul necesar.
 
