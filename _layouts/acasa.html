@@ -2,221 +2,308 @@
 layout: default
 ---
 
-<header class="antet">
-  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ tail -f parcurs.log<span class="cursor"></span></p>
-  <h1>Jurnal de parcurs — <span class="evidentiat">Sistem EDR</span></h1>
-  <p class="subtitlu">{{ site.description }}. Notițele de lucru din spatele
-  prototipului: de ce a apărut fiecare componentă și ce problemă concretă a rezolvat.</p>
-  <p class="subtitlu">
-    <a class="legatura-teza" href="{{ '/despre/' | relative_url }}">de ce acest EDR și nu altul →</a>
-  </p>
-  <div class="bara-stare">
-    <span class="stare-activa"><span class="punct-puls"></span>JURNAL ACTIV</span>
-    <span>autor: {{ site.author }}</span>
-  </div>
-</header>
-
 {% assign intrari = site.intrari | sort: "date" | reverse %}
 {% assign tipuri = site.intrari | map: "tip" | compact | uniq %}
 {% assign ultima = intrari | first %}
-{% assign teme_folosite = site.intrari | map: "tags" | compact | join: "," | split: "," | uniq | sort %}
+{% assign recente = intrari | slice: 0, 4 %}
 
-<section class="statistici" aria-label="Statistici jurnal">
-  <div class="statistica">
-    <div class="numar">{{ intrari | size }}</div>
-    <div class="descriere">{% if intrari.size == 1 %}intrare{% else %}intrări{% endif %}</div>
-  </div>
-  <div class="statistica">
-    <div class="numar">{{ tipuri | size }}</div>
-    <div class="descriere">{% if tipuri.size == 1 %}tip de notiță{% else %}tipuri de notițe{% endif %}</div>
-  </div>
-  <div class="statistica">
-    <div class="numar">{% if ultima %}{{ ultima.date | date: "%d.%m" }}{% else %}—{% endif %}</div>
-    <div class="descriere">ultima actualizare</div>
-  </div>
-</section>
+{%- comment -%}
+  Cifrele de pe pagina de start sunt aceleaşi cu cele de pe /parcurs/ şi
+  /capitole/, calculate din aceleaşi surse — nu scrise de mână. O pagină de
+  start care anunţă altceva decât paginile pe care le rezumă e fix oglinda pe
+  care jurnalul o critică în intrarea din 6 august.
+{%- endcomment -%}
+{%- assign commituri = site.data.commits.commituri -%}
+{%- assign referinte = "," -%}
+{%- for intrare in site.intrari -%}
+  {%- for c in intrare.commits -%}
+    {%- assign referinte = referinte | append: c | append: "," -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign acoperite = 0 -%}
+{%- for c in commituri -%}
+  {%- capture cheie %},{{ c.depozit }}@{{ c.hash }},{% endcapture -%}
+  {%- if referinte contains cheie -%}
+    {%- assign acoperite = acoperite | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
 
+{%- assign sectiuni_total = 0 -%}
+{%- assign sectiuni_sustinute = 0 -%}
+{%- for cap in site.data.capitole -%}
+  {%- for s in cap.sectiuni -%}
+    {%- assign sectiuni_total = sectiuni_total | plus: 1 -%}
+    {%- assign n = site.intrari | where: "capitol", s.nume | size -%}
+    {%- if n > 0 -%}
+      {%- assign sectiuni_sustinute = sectiuni_sustinute | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+
+<header class="antet antet--acasa">
+  <div class="antet-text">
+    <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ tail -f parcurs.log<span class="cursor"></span></p>
+    <h1>Jurnal de parcurs — <span class="evidentiat">Sistem EDR</span></h1>
+    <p class="subtitlu">{{ site.description }}. Notițele de lucru din spatele
+    prototipului: de ce a apărut fiecare componentă și ce problemă concretă a rezolvat.</p>
+    <div class="antet-actiuni">
+      <a class="buton-principal" href="{{ '/despre/' | relative_url }}">de ce acest EDR și nu altul →</a>
+      <a class="buton-secundar" href="{{ '/intrari/' | relative_url }}">toate intrările</a>
+    </div>
+  </div>
+
+  <aside class="panou-stare" aria-label="Starea jurnalului">
+    <div class="panou-titlu">
+      <span class="stare-activa"><span class="punct-puls"></span>JURNAL ACTIV</span>
+    </div>
+    <dl class="panou-linii">
+      <div class="panou-linie">
+        <dt>intrări scrise</dt>
+        <dd>{{ intrari | size }}</dd>
+      </div>
+      <div class="panou-linie">
+        <dt>tipuri de notiță</dt>
+        <dd>{{ tipuri | size }}</dd>
+      </div>
+      <div class="panou-linie">
+        <dt>ultima intrare</dt>
+        <dd>{% if ultima %}{{ ultima.date | date: "%d.%m.%Y" }}{% else %}—{% endif %}</dd>
+      </div>
+    </dl>
+    <p class="panou-subsol">autor: {{ site.author }}</p>
+  </aside>
+</header>
+
+{%- comment -%}
+  Pagina de start arată ultimele patru intrări, nu toate: lista completă, cu
+  filtre şi grupare pe luni, trăieşte la /intrari/. Aici e o vitrină, acolo e
+  arhiva.
+{%- endcomment -%}
 <main>
-  <h2 class="sectiune-titlu">// intrări</h2>
+  <h2 class="sectiune-titlu">// ultimele intrări</h2>
 
-  {%- comment -%}
-    Bara porneşte ascunsă şi e dezvăluită de script: fără JavaScript rămân
-    vizibile toate intrările, în loc de nişte butoane care nu fac nimic.
-    Se afişează doar dacă există măcar două intrări — sub atât, filtrarea
-    n-are ce filtra.
-  {%- endcomment -%}
-  {%- if intrari.size > 1 %}
-  <div class="filtre" data-filtre hidden>
-    <div class="filtru-grup" role="group" aria-label="Filtrează după tip">
-      <span class="filtru-eticheta">tip</span>
-      <button type="button" class="buton-filtru" data-filtru-tip="toate" aria-pressed="true">toate</button>
-      {%- for t in tipuri %}
-      <button type="button" class="buton-filtru tip--{{ t | slugify }}" data-filtru-tip="{{ t | slugify }}" aria-pressed="false">{{ t }}</button>
-      {%- endfor %}
-    </div>
-
-    {%- if teme_folosite.size > 0 %}
-    <div class="filtru-grup" role="group" aria-label="Filtrează după temă">
-      <span class="filtru-eticheta">teme</span>
-      {%- for tema in teme_folosite %}
-      <button type="button" class="buton-filtru buton-tema" data-filtru-tema="{{ tema }}" aria-pressed="false">#{{ tema }}</button>
-      {%- endfor %}
-    </div>
-    {%- endif %}
-
-    <div class="filtru-stare">
-      <span class="rezultate" data-rezultate aria-live="polite"></span>
-      <button type="button" class="buton-reset" data-reset hidden>curăță filtrele</button>
-    </div>
-  </div>
-  {%- endif %}
-
-  <div class="lista-intrari" data-lista-intrari>
-    {%- for intrare in intrari %}
+  <div class="lista-intrari">
+    {%- for intrare in recente %}
     {% include card-intrare.html intrare=intrare %}
     {%- else %}
     <p class="gol">// nicio intrare încă — jurnalul abia începe</p>
     {%- endfor %}
-    <p class="gol" data-gol-filtru hidden>// nicio intrare nu corespunde filtrelor</p>
   </div>
+
+  {%- if intrari.size > recente.size %}
+  <p class="spre-arhiva">
+    <a href="{{ '/intrari/' | relative_url }}">vezi toate cele {{ intrari | size }} intrări →</a>
+  </p>
+  {%- endif %}
 </main>
 
-<script>
-(function () {
-  "use strict";
+{%- comment -%}
+  Structura site-ului, cu cifra fiecărei pagini lângă ea. Bara de sus spune ce
+  există; blocul ăsta spune ce e înăuntru şi cât din el e încă gol.
+{%- endcomment -%}
+<section class="harta" aria-label="Secțiunile jurnalului">
+  <a class="card-harta" href="{{ '/parcurs/' | relative_url }}">
+    <span class="card-harta-cifra">{{ acoperite }}<span class="din">/{{ commituri | size }}</span></span>
+    <span class="card-harta-nume">parcurs</span>
+    <span class="card-harta-descriere">Istoricul celor două repo-uri de cod. Ce e nemarcat e backlogul de povești nescrise.</span>
+  </a>
+  <a class="card-harta" href="{{ '/capitole/' | relative_url }}">
+    <span class="card-harta-cifra">{{ sectiuni_sustinute }}<span class="din">/{{ sectiuni_total }}</span></span>
+    <span class="card-harta-nume">capitole</span>
+    <span class="card-harta-descriere">Ce intrare susține ce secțiune a lucrării — și care secțiuni n-au încă niciun suport.</span>
+  </a>
+  <a class="card-harta" href="{{ '/teme/' | relative_url }}">
+    <span class="card-harta-cifra">{{ site.data.teme | size }}</span>
+    <span class="card-harta-nume">teme</span>
+    <span class="card-harta-descriere">Firele care traversează jurnalul, dintr-un vocabular închis deliberat.</span>
+  </a>
+  <a class="card-harta" href="{{ '/despre/' | relative_url }}">
+    <span class="card-harta-cifra card-harta-cifra--fara-numar">→</span>
+    <span class="card-harta-nume">despre</span>
+    <span class="card-harta-descriere">Ce problemă rezolvă sistemul și de ce analiza merge la fișier, nu fișierul la analiză.</span>
+  </a>
+</section>
 
-  var bara = document.querySelector("[data-filtre]");
-  var lista = document.querySelector("[data-lista-intrari]");
-  if (!bara || !lista) { return; }
-
-  var carduri = Array.prototype.slice.call(lista.querySelectorAll("[data-tip]"));
-  if (carduri.length === 0) { return; }
-
-  var rezultate = bara.querySelector("[data-rezultate]");
-  var butonReset = bara.querySelector("[data-reset]");
-  var golFiltru = lista.querySelector("[data-gol-filtru]");
-
-  var butoaneTip = Array.prototype.slice.call(bara.querySelectorAll("[data-filtru-tip]"));
-  var butoaneTema = Array.prototype.slice.call(bara.querySelectorAll("[data-filtru-tema]"));
-
-  var tipAles = "toate";
-  var temeAlese = [];
-
-  function temeleCardului(card) {
-    var brut = card.getAttribute("data-teme") || "";
-    return brut ? brut.split(",") : [];
+<style>
+  /* ── Antet pe două coloane ─────────────── */
+  .antet--acasa {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+    gap: 40px;
+    align-items: start;
+    padding: 56px 0 44px;
   }
 
-  function pluralIntrari(n) {
-    return n === 1 ? "intrare" : "intrări";
+  .antet--acasa .subtitlu { margin-bottom: 24px; }
+
+  .antet-actiuni {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  // În interiorul unei faţete tag-urile se combină cu SAU (mai multe teme
-  // lărgesc rezultatul), iar între faţete cu ŞI (tipul restrânge întotdeauna).
-  function aplica() {
-    var vizibile = 0;
-
-    carduri.forEach(function (card) {
-      var potrivireTip = tipAles === "toate" || card.getAttribute("data-tip") === tipAles;
-      var temele = temeleCardului(card);
-      var potrivireTema = temeAlese.length === 0 || temeAlese.some(function (t) {
-        return temele.indexOf(t) !== -1;
-      });
-
-      var vizibil = potrivireTip && potrivireTema;
-      card.hidden = !vizibil;
-      if (vizibil) { vizibile++; }
-    });
-
-    var activ = tipAles !== "toate" || temeAlese.length > 0;
-
-    rezultate.textContent = activ
-      ? vizibile + " din " + carduri.length + " " + pluralIntrari(carduri.length)
-      : carduri.length + " " + pluralIntrari(carduri.length);
-
-    butonReset.hidden = !activ;
-    if (golFiltru) { golFiltru.hidden = vizibile !== 0; }
-
-    sincronizeazaButoane();
-    scrieHash(activ);
+  .buton-principal,
+  .buton-secundar {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    text-decoration: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
   }
 
-  // aria-pressed e singura sursă de adevăr pentru starea butonului: o citesc
-  // şi tehnologiile asistive, şi CSS-ul, deci cele două nu pot diverge.
-  function sincronizeazaButoane() {
-    butoaneTip.forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.getAttribute("data-filtru-tip") === tipAles));
-    });
-    butoaneTema.forEach(function (b) {
-      b.setAttribute("aria-pressed", String(temeAlese.indexOf(b.getAttribute("data-filtru-tema")) !== -1));
-    });
+  .buton-principal {
+    color: var(--fundal);
+    background: var(--accent);
+    font-weight: 600;
   }
 
-  function scrieHash(activ) {
-    var parti = [];
-    if (tipAles !== "toate") { parti.push("tip=" + encodeURIComponent(tipAles)); }
-    if (temeAlese.length > 0) { parti.push("teme=" + temeAlese.map(encodeURIComponent).join(",")); }
+  .buton-principal:hover { background: #5ff0b0; }
 
-    var hash = parti.length > 0 ? "#" + parti.join("&") : "";
-    if (window.location.hash === hash) { return; }
-    // replaceState, nu push: filtrarea nu trebuie să umple butonul „înapoi".
-    history.replaceState(null, "", window.location.pathname + window.location.search + hash);
+  .buton-secundar {
+    color: var(--text-sters);
+    border-color: var(--linie);
   }
 
-  // Valorile din hash sunt validate faţă de butoanele existente: un link vechi
-  // care trimite spre un tag dispărut nu trebuie să ascundă tot.
-  function citesteHash() {
-    var brut = window.location.hash.replace(/^#/, "");
-    tipAles = "toate";
-    temeAlese = [];
-    if (!brut) { return; }
-
-    var tipuriValide = butoaneTip.map(function (b) { return b.getAttribute("data-filtru-tip"); });
-    var temeValide = butoaneTema.map(function (b) { return b.getAttribute("data-filtru-tema"); });
-
-    brut.split("&").forEach(function (pereche) {
-      var separator = pereche.indexOf("=");
-      if (separator === -1) { return; }
-      var cheie = pereche.slice(0, separator);
-      var valoare = decodeURIComponent(pereche.slice(separator + 1));
-
-      if (cheie === "tip" && tipuriValide.indexOf(valoare) !== -1) {
-        tipAles = valoare;
-      } else if (cheie === "teme") {
-        temeAlese = valoare.split(",").filter(function (t) {
-          return temeValide.indexOf(t) !== -1;
-        });
-      }
-    });
+  .buton-secundar:hover {
+    color: var(--text);
+    background: var(--fundal-card);
   }
 
-  bara.addEventListener("click", function (ev) {
-    var buton = ev.target.closest("button");
-    if (!buton || !bara.contains(buton)) { return; }
+  /* ── Panoul de stare ───────────────────── */
+  .panou-stare {
+    background: var(--fundal-card);
+    border: 1px solid var(--linie);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
 
-    if (buton.hasAttribute("data-reset")) {
-      tipAles = "toate";
-      temeAlese = [];
-    } else if (buton.hasAttribute("data-filtru-tip")) {
-      tipAles = buton.getAttribute("data-filtru-tip");
-    } else if (buton.hasAttribute("data-filtru-tema")) {
-      var tema = buton.getAttribute("data-filtru-tema");
-      var pozitie = temeAlese.indexOf(tema);
-      if (pozitie === -1) { temeAlese.push(tema); } else { temeAlese.splice(pozitie, 1); }
-    } else {
-      return;
+  .panou-titlu { margin-bottom: 14px; }
+
+  .panou-linii {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+  }
+
+  /* Punctele de legătură dintre etichetă şi valoare — citit ca o ieşire de
+     terminal, nu ca un tabel. */
+  .panou-linie {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px dotted var(--linie);
+  }
+
+  .panou-linie:last-child { border-bottom: 0; }
+
+  .panou-linie dt {
+    color: var(--text-sters);
+    white-space: nowrap;
+  }
+
+  .panou-linie dd {
+    margin: 0 0 0 auto;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .panou-subsol {
+    margin: 14px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--linie);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-sters);
+  }
+
+  /* ── Legătura spre arhivă ──────────────── */
+  .spre-arhiva {
+    margin: 22px 0 0;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+
+  .spre-arhiva a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .spre-arhiva a:hover { border-bottom-color: var(--accent); }
+
+  /* ── Harta site-ului ───────────────────── */
+  .harta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    padding: 40px 0 8px;
+  }
+
+  .card-harta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--fundal-card);
+    border: 1px solid var(--linie);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+  }
+
+  .card-harta:hover {
+    background: var(--fundal-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .card-harta-cifra {
+    font-family: var(--mono);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+
+  /* Cardul „despre" n-are ce număra — săgeata ţine locul cifrei ca să nu se
+     rupă alinierea, dar nu se prezintă drept măsurătoare. */
+  .card-harta-cifra--fara-numar { color: var(--text-sters); }
+
+  .card-harta:hover .card-harta-cifra--fara-numar { color: var(--accent); }
+
+  .card-harta-cifra .din {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-sters);
+  }
+
+  .card-harta-nume {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text);
+  }
+
+  .card-harta-descriere {
+    font-size: 0.83rem;
+    color: var(--text-sters);
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-harta:hover { transform: none; }
+  }
+
+  @media (max-width: 720px) {
+    .antet--acasa {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 36px 0 32px;
     }
-
-    aplica();
-  });
-
-  window.addEventListener("hashchange", function () {
-    citesteHash();
-    aplica();
-  });
-
-  citesteHash();
-  bara.hidden = false;
-  aplica();
-})();
-</script>
+  }
+</style>

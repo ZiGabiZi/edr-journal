@@ -64,6 +64,65 @@
       padding: 0 24px;
     }
 
+    /* ── Navigare principală ───────────────── */
+    .navigare-sus {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--linie);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+    }
+
+    .marca {
+      color: var(--text-sters);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .marca-nume { color: var(--accent); }
+    .marca:hover { color: var(--text); }
+
+    .navigare-legaturi {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navigare-legaturi a {
+      display: block;
+      padding: 5px 11px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      color: var(--text-sters);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .navigare-legaturi a:hover {
+      color: var(--text);
+      background: var(--fundal-card);
+      border-color: var(--linie);
+    }
+
+    .navigare-legaturi a.activ {
+      color: var(--accent);
+      background: var(--accent-slab);
+      border-color: rgba(61, 220, 151, 0.3);
+    }
+
+    @media (max-width: 640px) {
+      .navigare-sus { gap: 6px 12px; }
+      .navigare-legaturi { gap: 2px; }
+      .navigare-legaturi a { padding: 5px 9px; }
+    }
+
     /* ── Antet (acasă) ─────────────────────── */
     .antet {
       padding: 72px 0 48px;
@@ -1181,16 +1240,35 @@
 <body>
   <div class="invelis">
 
+    {%- comment -%}
+      Structura site-ului stă sus, pe toate paginile — nu în subsol, unde
+      ajungea doar cine derula până la capăt. Paginile interioare îşi păstrează
+      firimiturile: bara spune unde poţi merge, firimiturile spun unde eşti.
+    {%- endcomment -%}
+    <nav class="navigare-sus" aria-label="Navigare principală">
+      {%- comment -%}
+        Marca nu repetă `gabi@edr`: promptul din antetul fiecărei pagini îl
+        poartă deja, iar de două ori pe acelaşi ecran nu mai e identitate, e
+        zgomot.
+      {%- endcomment -%}
+      <a class="marca" href="{{ '/' | relative_url }}">
+        <span class="marca-nume">jurnal</span> de parcurs
+      </a>
+      <ul class="navigare-legaturi">
+        <li><a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="activ" aria-current="page"{% endif %}>acasă</a></li>
+        <li><a href="{{ '/intrari/' | relative_url }}"{% if page.url == '/intrari/' %} class="activ" aria-current="page"{% endif %}>intrări</a></li>
+        <li><a href="{{ '/parcurs/' | relative_url }}"{% if page.url == '/parcurs/' %} class="activ" aria-current="page"{% endif %}>parcurs</a></li>
+        <li><a href="{{ '/teme/' | relative_url }}"{% if page.url == '/teme/' %} class="activ" aria-current="page"{% endif %}>teme</a></li>
+        <li><a href="{{ '/capitole/' | relative_url }}"{% if page.url == '/capitole/' %} class="activ" aria-current="page"{% endif %}>capitole</a></li>
+        <li><a href="{{ '/despre/' | relative_url }}"{% if page.url == '/despre/' %} class="activ" aria-current="page"{% endif %}>despre</a></li>
+      </ul>
+    </nav>
+
     {{ content }}
 
     <footer class="subsol">
       <span>© {{ site.time | date: "%Y" }} {{ site.author }}</span>
       <span>
-        <a href="{{ '/' | relative_url }}">acasă</a> ·
-        <a href="{{ '/despre/' | relative_url }}">despre</a> ·
-        <a href="{{ '/parcurs/' | relative_url }}">parcurs</a> ·
-        <a href="{{ '/teme/' | relative_url }}">teme</a> ·
-        <a href="{{ '/capitole/' | relative_url }}">capitole</a> ·
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a> · construit cu Jekyll
       </span>
     </footer>

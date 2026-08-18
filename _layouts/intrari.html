@@ -1,0 +1,312 @@
+---
+layout: default
+---
+
+{%- assign intrari = site.intrari | sort: "date" | reverse -%}
+{%- assign tipuri = site.intrari | map: "tip" | compact | uniq | sort -%}
+{%- assign teme_folosite = site.intrari | map: "tags" | compact | join: "," | split: "," | uniq | sort -%}
+{%- assign luni_ro = "ianuarie,februarie,martie,aprilie,mai,iunie,iulie,august,septembrie,octombrie,noiembrie,decembrie" | split: "," -%}
+
+<nav class="firimituri" aria-label="Firimituri">
+  <a href="{{ '/' | relative_url }}">jurnal</a>
+  <span class="separator">/</span>
+  <span class="curent">intrări</span>
+</nav>
+
+<header class="antet-tema">
+  <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ ls -lt _intrari/</p>
+  <h1>Intrări</h1>
+  <p class="rezumat">Toate notițele, în ordine inversă a scrierii. Fiecare pornește de la
+  o problemă concretă, într-o zi anume — nu de la un subiect.</p>
+</header>
+
+{%- comment -%}
+  Numărătoarea pe tipuri stă sus ca inventar, nu ca filtru: butoanele de mai jos
+  fac filtrarea, blocul ăsta spune din ce e făcut jurnalul înainte s-o atingi.
+{%- endcomment -%}
+<section class="inventar" aria-label="Intrări după tip">
+  <div class="inventar-linie">
+    <span class="inventar-cifra">{{ intrari | size }}</span>
+    <span class="inventar-eticheta">intrări în total</span>
+  </div>
+  {%- for t in tipuri %}
+  {%- assign cate = site.intrari | where: "tip", t | size %}
+  <div class="inventar-linie tip--{{ t | slugify }}">
+    <span class="inventar-cifra">{{ cate }}</span>
+    <span class="inventar-eticheta">{{ t }}</span>
+  </div>
+  {%- endfor %}
+</section>
+
+<main>
+  {%- comment -%}
+    Bara porneşte ascunsă şi e dezvăluită de script: fără JavaScript rămân
+    vizibile toate intrările, în loc de nişte butoane care nu fac nimic.
+  {%- endcomment -%}
+  {%- if intrari.size > 1 %}
+  <div class="filtre" data-filtre hidden>
+    <div class="filtru-grup" role="group" aria-label="Filtrează după tip">
+      <span class="filtru-eticheta">tip</span>
+      <button type="button" class="buton-filtru" data-filtru-tip="toate" aria-pressed="true">toate</button>
+      {%- for t in tipuri %}
+      <button type="button" class="buton-filtru tip--{{ t | slugify }}" data-filtru-tip="{{ t | slugify }}" aria-pressed="false">{{ t }}</button>
+      {%- endfor %}
+    </div>
+
+    {%- if teme_folosite.size > 0 %}
+    <div class="filtru-grup" role="group" aria-label="Filtrează după temă">
+      <span class="filtru-eticheta">teme</span>
+      {%- for tema in teme_folosite %}
+      <button type="button" class="buton-filtru buton-tema" data-filtru-tema="{{ tema }}" aria-pressed="false">#{{ tema }}</button>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    <div class="filtru-stare">
+      <span class="rezultate" data-rezultate aria-live="polite"></span>
+      <button type="button" class="buton-reset" data-reset hidden>curăță filtrele</button>
+    </div>
+  </div>
+  {%- endif %}
+
+  {%- comment -%}
+    Gruparea pe luni e făcută în Liquid, nu în script: fără JavaScript pagina
+    rămâne o cronologie citibilă, nu o listă plată de cincisprezece carduri.
+  {%- endcomment -%}
+  <div data-lista-intrari>
+    {%- assign grupe = intrari | group_by_exp: "i", "i.date | date: '%Y-%m'" %}
+    {%- for grup in grupe %}
+    {%- assign luna_index = grup.items[0].date | date: "%m" | plus: 0 | minus: 1 %}
+    <section class="grup-luna" data-grup>
+      <h2 class="antet-luna">
+        <span class="luna-nume">{{ luni_ro[luna_index] }} {{ grup.items[0].date | date: "%Y" }}</span>
+        <span class="luna-numar" data-numar-grup>{{ grup.items | size }}</span>
+      </h2>
+      <div class="lista-intrari">
+        {%- for intrare in grup.items %}
+        {% include card-intrare.html intrare=intrare %}
+        {%- endfor %}
+      </div>
+    </section>
+    {%- else %}
+    <p class="gol">// nicio intrare încă — jurnalul abia începe</p>
+    {%- endfor %}
+    <p class="gol" data-gol-filtru hidden>// nicio intrare nu corespunde filtrelor</p>
+  </div>
+</main>
+
+<style>
+  .inventar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 28px 0 8px;
+  }
+
+  .inventar-linie {
+    --ton: var(--text-sters);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    background: var(--fundal-card);
+    border: 1px solid var(--linie);
+    border-left: 3px solid var(--ton);
+    border-radius: 8px;
+    padding: 10px 16px;
+  }
+
+  .inventar-cifra {
+    font-family: var(--mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ton);
+  }
+
+  .inventar-eticheta {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-sters);
+  }
+
+  .grup-luna { margin-bottom: 2.6rem; }
+
+  .antet-luna {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-sters);
+    margin: 0 0 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--linie);
+  }
+
+  .luna-nume { color: var(--text); }
+
+  .luna-numar {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--text-sters);
+    border: 1px solid var(--linie);
+    border-radius: 999px;
+    padding: 1px 9px;
+  }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  var bara = document.querySelector("[data-filtre]");
+  var lista = document.querySelector("[data-lista-intrari]");
+  if (!bara || !lista) { return; }
+
+  var carduri = Array.prototype.slice.call(lista.querySelectorAll("[data-tip]"));
+  if (carduri.length === 0) { return; }
+
+  var grupuri = Array.prototype.slice.call(lista.querySelectorAll("[data-grup]"));
+  var rezultate = bara.querySelector("[data-rezultate]");
+  var butonReset = bara.querySelector("[data-reset]");
+  var golFiltru = lista.querySelector("[data-gol-filtru]");
+
+  var butoaneTip = Array.prototype.slice.call(bara.querySelectorAll("[data-filtru-tip]"));
+  var butoaneTema = Array.prototype.slice.call(bara.querySelectorAll("[data-filtru-tema]"));
+
+  var tipAles = "toate";
+  var temeAlese = [];
+
+  function temeleCardului(card) {
+    var brut = card.getAttribute("data-teme") || "";
+    return brut ? brut.split(",") : [];
+  }
+
+  function pluralIntrari(n) {
+    return n === 1 ? "intrare" : "intrări";
+  }
+
+  // În interiorul unei faţete tag-urile se combină cu SAU (mai multe teme
+  // lărgesc rezultatul), iar între faţete cu ŞI (tipul restrânge întotdeauna).
+  function aplica() {
+    var vizibile = 0;
+
+    carduri.forEach(function (card) {
+      var potrivireTip = tipAles === "toate" || card.getAttribute("data-tip") === tipAles;
+      var temele = temeleCardului(card);
+      var potrivireTema = temeAlese.length === 0 || temeAlese.some(function (t) {
+        return temele.indexOf(t) !== -1;
+      });
+
+      var vizibil = potrivireTip && potrivireTema;
+      card.hidden = !vizibil;
+      if (vizibil) { vizibile++; }
+    });
+
+    // O lună fără nicio intrare vizibilă dispare cu totul: altfel ar rămâne un
+    // titlu de secţiune care promite conţinut şi nu are.
+    grupuri.forEach(function (grup) {
+      var vii = grup.querySelectorAll("[data-tip]:not([hidden])").length;
+      grup.hidden = vii === 0;
+      var numar = grup.querySelector("[data-numar-grup]");
+      if (numar) { numar.textContent = vii; }
+    });
+
+    var activ = tipAles !== "toate" || temeAlese.length > 0;
+
+    rezultate.textContent = activ
+      ? vizibile + " din " + carduri.length + " " + pluralIntrari(carduri.length)
+      : carduri.length + " " + pluralIntrari(carduri.length);
+
+    butonReset.hidden = !activ;
+    if (golFiltru) { golFiltru.hidden = vizibile !== 0; }
+
+    sincronizeazaButoane();
+    scrieHash(activ);
+  }
+
+  // aria-pressed e singura sursă de adevăr pentru starea butonului: o citesc
+  // şi tehnologiile asistive, şi CSS-ul, deci cele două nu pot diverge.
+  function sincronizeazaButoane() {
+    butoaneTip.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-filtru-tip") === tipAles));
+    });
+    butoaneTema.forEach(function (b) {
+      b.setAttribute("aria-pressed", String(temeAlese.indexOf(b.getAttribute("data-filtru-tema")) !== -1));
+    });
+  }
+
+  function scrieHash(activ) {
+    var parti = [];
+    if (tipAles !== "toate") { parti.push("tip=" + encodeURIComponent(tipAles)); }
+    if (temeAlese.length > 0) { parti.push("teme=" + temeAlese.map(encodeURIComponent).join(",")); }
+
+    var hash = parti.length > 0 ? "#" + parti.join("&") : "";
+    if (window.location.hash === hash) { return; }
+    // Un hash care nu descrie filtre nu se şterge: funcţia asta răspunde doar
+    // de starea filtrelor, nu de tot URL-ul.
+    if (hash === "" && window.location.hash.indexOf("=") === -1) { return; }
+    // replaceState, nu push: filtrarea nu trebuie să umple butonul „înapoi".
+    history.replaceState(null, "", window.location.pathname + window.location.search + hash);
+  }
+
+  // Valorile din hash sunt validate faţă de butoanele existente: un link vechi
+  // care trimite spre un tag dispărut nu trebuie să ascundă tot.
+  function citesteHash() {
+    var brut = window.location.hash.replace(/^#/, "");
+    tipAles = "toate";
+    temeAlese = [];
+    if (!brut) { return; }
+
+    var tipuriValide = butoaneTip.map(function (b) { return b.getAttribute("data-filtru-tip"); });
+    var temeValide = butoaneTema.map(function (b) { return b.getAttribute("data-filtru-tema"); });
+
+    brut.split("&").forEach(function (pereche) {
+      var separator = pereche.indexOf("=");
+      if (separator === -1) { return; }
+      var cheie = pereche.slice(0, separator);
+      var valoare = decodeURIComponent(pereche.slice(separator + 1));
+
+      if (cheie === "tip" && tipuriValide.indexOf(valoare) !== -1) {
+        tipAles = valoare;
+      } else if (cheie === "teme") {
+        temeAlese = valoare.split(",").filter(function (t) {
+          return temeValide.indexOf(t) !== -1;
+        });
+      }
+    });
+  }
+
+  bara.addEventListener("click", function (ev) {
+    var buton = ev.target.closest("button");
+    if (!buton || !bara.contains(buton)) { return; }
+
+    if (buton.hasAttribute("data-reset")) {
+      tipAles = "toate";
+      temeAlese = [];
+    } else if (buton.hasAttribute("data-filtru-tip")) {
+      tipAles = buton.getAttribute("data-filtru-tip");
+    } else if (buton.hasAttribute("data-filtru-tema")) {
+      var tema = buton.getAttribute("data-filtru-tema");
+      var pozitie = temeAlese.indexOf(tema);
+      if (pozitie === -1) { temeAlese.push(tema); } else { temeAlese.splice(pozitie, 1); }
+    } else {
+      return;
+    }
+
+    aplica();
+  });
+
+  window.addEventListener("hashchange", function () {
+    citesteHash();
+    aplica();
+  });
+
+  citesteHash();
+  bara.hidden = false;
+  aplica();
+})();
+</script>

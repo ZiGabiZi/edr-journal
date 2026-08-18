@@ -2,7 +2,15 @@
 layout: default
 ---
 
-{%- assign nume_cunoscute = site.data.capitole | map: "nume" -%}
+{%- comment -%}
+  capitole.yml e grupat pe capitole, deci lista plată de secţiuni — de care au
+  nevoie validările de mai jos — se reconstruieşte aici, o singură dată.
+{%- endcomment -%}
+{%- assign sectiuni_toate = "" | split: "" -%}
+{%- for cap in site.data.capitole -%}
+  {%- assign sectiuni_toate = sectiuni_toate | concat: cap.sectiuni -%}
+{%- endfor -%}
+{%- assign nume_cunoscute = sectiuni_toate | map: "nume" -%}
 {%- assign toate = site.intrari | sort: "date" -%}
 
 <nav class="firimituri" aria-label="Firimituri">
@@ -15,8 +23,12 @@ layout: default
   <p class="prompt"><span class="cale">gabi@edr</span>:~/jurnal$ grep -r "^capitol:" _intrari/</p>
   <h1>Capitole</h1>
   <p class="rezumat">Jurnalul are dublu rol: log de inginerie și materie primă pentru
-  Capitolul 3. Pagina asta arată lanțul de proveniență în ambele sensuri — ce intrări
+  lucrare. Pagina asta arată lanțul de proveniență în ambele sensuri — ce intrări
   susțin o secțiune și care secțiuni n-au încă niciun suport scris.</p>
+  <p class="rezumat">Secțiunile Capitolului 2 sunt <strong>declarate înainte să existe
+  în lucrare</strong>: <code>_data/capitole.yml</code> e partea autoritativă, iar
+  documentul e implementarea rămasă în urmă. O secțiune goală de acolo e o sarcină,
+  nu o eroare.</p>
 </header>
 
 {%- comment -%}
@@ -57,28 +69,47 @@ layout: default
     <strong>{{ mapate }}</strong> din {{ toate.size }} intrări sunt legate de o secțiune.
   </p>
 
-  {%- for capitol in site.data.capitole %}
-  {%- assign intrari_sectiune = toate | where: "capitol", capitol.nume %}
-  <section class="sectiune-capitol{% if intrari_sectiune.size == 0 %} sectiune-capitol--goala{% endif %}"
-           id="sectiunea-{{ capitol.nume | replace: '.', '-' }}">
-    <header class="antet-sectiune">
+  {%- for cap in site.data.capitole %}
+  {%- assign sustinute = 0 -%}
+  {%- for s in cap.sectiuni -%}
+    {%- assign n = toate | where: "capitol", s.nume | size -%}
+    {%- if n > 0 %}{% assign sustinute = sustinute | plus: 1 %}{% endif -%}
+  {%- endfor %}
+  <section class="grup-capitol" id="capitolul-{{ cap.numar }}">
+    <header class="antet-capitol">
       <h2>
-        <span class="numar-sectiune">{{ capitol.nume }}</span>
-        {{ capitol.titlu }}
-        <span class="card-tema-numar">{{ intrari_sectiune.size }}</span>
+        <span class="numar-capitol">Capitolul {{ cap.numar }}</span>
+        {{ cap.titlu }}
       </h2>
-      <p class="card-tema-descriere">{{ capitol.descriere }}</p>
+      <p class="acoperire-capitol">
+        {{ sustinute }} din {{ cap.sectiuni.size }} secțiuni au suport scris.
+      </p>
     </header>
 
-    {%- if intrari_sectiune.size > 0 %}
-    <div class="lista-intrari">
-      {%- for intrare in intrari_sectiune %}
-      {%- include card-intrare.html intrare=intrare %}
-      {%- endfor %}
-    </div>
-    {%- else %}
-    <p class="fara-suport">Nicio intrare încă. Secțiunea asta se scrie fără materie primă.</p>
-    {%- endif %}
+    {%- for capitol in cap.sectiuni %}
+    {%- assign intrari_sectiune = toate | where: "capitol", capitol.nume %}
+    <section class="sectiune-capitol{% if intrari_sectiune.size == 0 %} sectiune-capitol--goala{% endif %}"
+             id="sectiunea-{{ capitol.nume | replace: '.', '-' }}">
+      <header class="antet-sectiune">
+        <h3>
+          <span class="numar-sectiune">{{ capitol.nume }}</span>
+          {{ capitol.titlu }}
+          <span class="card-tema-numar">{{ intrari_sectiune.size }}</span>
+        </h3>
+        <p class="card-tema-descriere">{{ capitol.descriere }}</p>
+      </header>
+
+      {%- if intrari_sectiune.size > 0 %}
+      <div class="lista-intrari">
+        {%- for intrare in intrari_sectiune %}
+        {%- include card-intrare.html intrare=intrare %}
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="fara-suport">Nicio intrare încă. Secțiunea asta se scrie fără materie primă.</p>
+      {%- endif %}
+    </section>
+    {%- endfor %}
   </section>
   {%- endfor %}
 </main>
@@ -90,9 +121,38 @@ layout: default
     margin-bottom: 2rem;
   }
 
+  .grup-capitol { margin-bottom: 4rem; }
+
+  .antet-capitol {
+    border-bottom: 1px solid var(--linie, var(--text-sters));
+    padding-bottom: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .antet-capitol h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    font-size: 1.35rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .numar-capitol {
+    font-family: var(--mono, monospace);
+    color: var(--accent);
+    font-size: 0.85em;
+  }
+
+  .acoperire-capitol {
+    color: var(--text-sters);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
   .sectiune-capitol { margin-bottom: 3rem; }
 
-  .antet-sectiune h2 {
+  .antet-sectiune h3 {
     display: flex;
     align-items: baseline;
     gap: 0.6rem;

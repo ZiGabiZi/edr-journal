@@ -1,4 +1,4 @@
-# Secțiunile Capitolului 3 al lucrării, ca sursă unică de adevăr.
+# Secțiunile lucrării, ca sursă unică de adevăr.
 #
 # Jurnalul are dublu rol: log de inginerie și materie primă pentru lucrare.
 # Câmpul `capitol` din front-matter-ul unei intrări o leagă de secțiunea pe care
@@ -8,35 +8,95 @@
 #
 # O secțiune nouă se adaugă aici întâi, apoi se folosește într-o intrare.
 # O intrare fără `capitol` e semnalată pe /capitole/ ca nemapată.
+#
+# Secțiunile 2.x sunt declarate aici ÎNAINTE să existe în lucrare: acest fișier
+# e partea autoritativă, iar .docx-ul e implementarea rămasă în urmă. O secțiune
+# prezentă aici și absentă din lucrare e o sarcină, nu o inconsistență; una
+# prezentă în lucrare și absentă de aici e o scăpare. Direcția contează: la
+# divergență, se schimbă lucrarea.
 
-- nume: "3.1"
-  titlu: Observarea pe endpoint
-  descriere: Ce ajunge să fie văzut local — acoperirea configurată, evenimentele de fișier care contează și cele suprimate ca zgomot.
+- numar: "2"
+  titlu: Metodologie și arhitectura sistemului propus
+  sectiuni:
 
-- nume: "3.2"
-  titlu: Livrarea garantată a evenimentelor
-  descriere: Separarea detecției de transmisie, coada durabilă și semantica at-least-once cu deduplicare la recepție.
+    - nume: "2.1"
+      titlu: Cerințe funcționale și nefuncționale
+      descriere: Ce trebuie să facă sistemul și sub ce constrângeri — inclusiv cele care în medii izolate nu sunt negociabile.
 
-- nume: "3.3"
-  titlu: Identitatea agentului și a evenimentului
-  descriere: Cine e mașina, care încarnare a procesului raportează și cum se recunoaște un eveniment retransmis.
+    - nume: "2.2"
+      titlu: Modelul de amenințări și constrângerea de confidențialitate
+      descriere: Împotriva cui apără sistemul și de ce datele care părăsesc endpoint-ul fac ele însele parte din suprafața de atac.
 
-- nume: "3.4"
-  titlu: Continuitate și stare observabilă
-  descriere: Cum se derivă starea de viață a unui endpoint și cum devine numărabilă absența unui mesaj.
+    - nume: "2.3"
+      titlu: Arhitectura agent–server în medii izolate
+      descriere: Împărțirea rolurilor între endpoint și punctul central, când legătura dintre ele poate lipsi prin proiect, nu din defect.
 
-- nume: "3.5"
-  titlu: Reziliență la indisponibilitatea serverului
-  descriere: Comportamentul parcului când punctul central lipsește — reîncercare, desincronizare, ordinea de inițializare.
+    - nume: "2.4"
+      titlu: Protocolul de divulgare progresivă (PDP)
+      descriere: Contribuția lucrării — analiza merge la fișier, nu fișierul la analiză. Divulgarea în trepte, guvernată de incertitudinea rămasă.
 
-- nume: "3.6"
-  titlu: Integritatea stării pe server
-  descriere: Structurile partajate ale serverului sub cereri concurente și invarianții pe care trebuie să-i păstreze.
+    - nume: "2.5"
+      titlu: Treptele de divulgare și artefactele fiecăreia
+      descriere: Ce urcă la fiecare treaptă și de ce artefactul e suficient pentru decizia treptei, fără să fie mai mult decât atât.
 
-- nume: "3.7"
-  titlu: Canalul de control și drumul spre PDP
-  descriere: Direcția server-agent, directivele purtate de heartbeat și mecanismul pe care se va sprijini divulgarea progresivă.
+    - nume: "2.6"
+      titlu: Funcția de cost și banda de incertitudine
+      descriere: Regula care decide când se oprește divulgarea — ce se compară, ce se plătește la fiecare treaptă și unde cade pragul.
 
-- nume: "3.8"
-  titlu: Contractul dintre componente
-  descriere: Ce garantează fiecare parte celeilalte când cele două repo-uri se pot schimba separat — și în ce moment se descoperă încălcarea.
+    - nume: "2.7"
+      titlu: "Coborârea regulilor: distribuția rulesetului în medii izolate"
+      descriere: Precondiția invariantului. Dacă regulile nu pot coborî, verdictul local nu se poate calcula, iar singura cale rămasă e urcarea fișierului — adică exact ce interzice invarianta. Cererea pe care canalul de directive din 3.7 o satisface.
+
+    - nume: "2.8"
+      titlu: Transportul securizat și riscul rezidual
+      descriere: Al doilea adversar. PDP-ul mărginește ce ajunge să existe în afara endpoint-ului, transportul apără ce e deja pe drum; sunt două riscuri reziduale diferite și se revendică separat.
+
+    - nume: "2.9"
+      titlu: Registrul de divulgare ca metrică de protocol
+      descriere: Ce se numără ca să se poată compara — octeții per treaptă și decizia care i-a cerut, ca proprietate măsurabilă a protocolului.
+
+    - nume: "2.10"
+      titlu: "Linia de bază: modelul always-upload"
+      descriere: Alternativa respinsă, descrisă ca model propriu-zis, nu invocată ca termen de comparație. Fără ea, comparația din evaluare apare din nimic.
+
+    - nume: "2.11"
+      titlu: Mediul de testare și protocolul de măsurare
+      descriere: Montajul — ce se rulează, pe ce și cu ce sarcină de lucru. Secțiunea pe care o intrare de tip măsurătoare o pre-înregistrează înainte să existe cifra.
+
+# Titlul capitolului e eticheta de lucru a jurnalului; de înlocuit cu cel exact
+# din lucrare când îl confirmi.
+- numar: "3"
+  titlu: Implementarea sistemului
+  sectiuni:
+
+    - nume: "3.1"
+      titlu: Observarea pe endpoint
+      descriere: Ce ajunge să fie văzut local — acoperirea configurată, evenimentele de fișier care contează și cele suprimate ca zgomot.
+
+    - nume: "3.2"
+      titlu: Livrarea garantată a evenimentelor
+      descriere: Separarea detecției de transmisie, coada durabilă și semantica at-least-once cu deduplicare la recepție.
+
+    - nume: "3.3"
+      titlu: Identitatea agentului și a evenimentului
+      descriere: Cine e mașina, care încarnare a procesului raportează și cum se recunoaște un eveniment retransmis.
+
+    - nume: "3.4"
+      titlu: Continuitate și stare observabilă
+      descriere: Cum se derivă starea de viață a unui endpoint și cum devine numărabilă absența unui mesaj.
+
+    - nume: "3.5"
+      titlu: Reziliență la indisponibilitatea serverului
+      descriere: Comportamentul parcului când punctul central lipsește — reîncercare, desincronizare, ordinea de inițializare.
+
+    - nume: "3.6"
+      titlu: Integritatea stării pe server
+      descriere: Structurile partajate ale serverului sub cereri concurente și invarianții pe care trebuie să-i păstreze.
+
+    - nume: "3.7"
+      titlu: Canalul de control și drumul spre PDP
+      descriere: Direcția server-agent, directivele purtate de heartbeat și mecanismul pe care se va sprijini divulgarea progresivă.
+
+    - nume: "3.8"
+      titlu: Contractul dintre componente
+      descriere: Ce garantează fiecare parte celeilalte când cele două repo-uri se pot schimba separat — și în ce moment se descoperă încălcarea.
