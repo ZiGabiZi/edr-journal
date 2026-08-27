@@ -1,11 +1,579 @@
 {
- "generat_la": "2026-08-18T15:00:53Z",
+ "generat_la": "2026-08-27T19:33:33Z",
  "depozite": [
   "edr-agent",
   "edr-server"
  ],
- "total": 76,
+ "total": 109,
  "commituri": [
+  {
+   "depozit": "edr-agent",
+   "hash": "a88f596",
+   "data": "2026-08-26",
+   "data_iso": "2026-08-26T14:55:10+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): secretul de inrolare nu mai piere odata cu cheia nescrisa",
+   "fisiere": [
+    "agent.py",
+    "services/agent_credentials.py",
+    "tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 92,
+   "linii_sterse": 6
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "1411acc",
+   "data": "2026-08-26",
+   "data_iso": "2026-08-26T14:40:00+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(config): identitatea nu mai vine scrisa din sablonul livrat",
+   "fisiere": [
+    ".gitignore",
+    "README.md",
+    "config.json => config.example.json",
+    "services/config_loader.py",
+    "tests/test_agent_identity.py",
+    "tests/test_config_template.py"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 129,
+   "linii_sterse": 8
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "e1b6bbd",
+   "data": "2026-08-26",
+   "data_iso": "2026-08-26T13:35:42+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "README",
+   "fisiere": [
+    "README.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 277,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "8af5553",
+   "data": "2026-08-25",
+   "data_iso": "2026-08-25T22:39:06+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "README",
+   "fisiere": [
+    "README.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 256,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4ae0865",
+   "data": "2026-08-25",
+   "data_iso": "2026-08-25T22:15:06+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "perf(agent): evenimentele de fisier nu mai poarta o descriere derivata",
+   "fisiere": [
+    "services/file_event.py",
+    "tests/test_settle_tracker.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 35,
+   "linii_sterse": 9
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "d39c220",
+   "data": "2026-08-25",
+   "data_iso": "2026-08-25T21:40:51+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): linia de baza T0 a metricii de divulgare",
+   "fisiere": [
+    "app/main.py",
+    "app/routes/metrics.py",
+    "app/services/disclosure_metrics.py",
+    "app/tests/test_disclosure_metrics.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 435,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "9a48e35",
+   "data": "2026-08-25",
+   "data_iso": "2026-08-25T20:50:55+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): hashing-ul nu mai asteapta cand mai are treaba",
+   "fisiere": [
+    "services/file_hasher.py",
+    "tests/test_file_hasher.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 129,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "a1cfbd3",
+   "data": "2026-08-24",
+   "data_iso": "2026-08-24T17:07:13+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "test(agent): criteriul Etapei 0, demonstrat prin lantul real",
+   "fisiere": [
+    "tests/test_file_pipeline_end_to_end.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 288,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4715543",
+   "data": "2026-08-24",
+   "data_iso": "2026-08-24T16:57:16+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): jurnalul nu mai raporteaza esecuri de heartbeat pe alte canale",
+   "fisiere": [
+    "agent.py",
+    "services/backoff.py",
+    "services/event_dispatcher.py",
+    "tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 124,
+   "linii_sterse": 4
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "cd85bab",
+   "data": "2026-08-24",
+   "data_iso": "2026-08-24T16:28:14+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza AUTH.md cu tratamentul lui 409",
+   "fisiere": [
+    "contracts/AUTH.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 9,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "9f70450",
+   "data": "2026-08-24",
+   "data_iso": "2026-08-24T16:26:00+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): un conflict de nume nu mai opreste agentul la pornire",
+   "fisiere": [
+    "agent.py",
+    "contracts/AUTH.md",
+    "services/auth_alarm.py",
+    "services/transport.py",
+    "tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 160,
+   "linii_sterse": 10
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "9aee32f",
+   "data": "2026-08-24",
+   "data_iso": "2026-08-24T16:25:44+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): agent_id derivat din masina si inghetat local",
+   "fisiere": [
+    ".gitignore",
+    "agent.py",
+    "services/agent_credentials.py",
+    "services/agent_identity.py",
+    "services/config_loader.py",
+    "tests/test_agent_identity.py"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 580,
+   "linii_sterse": 10
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "d4439d5",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T22:41:59+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): pragurile de alarma nu mai calatoresc printr-un dictionar opac",
+   "fisiere": [
+    "agent.py",
+    "tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 100,
+   "linii_sterse": 19
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "710b9ee",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T22:32:59+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): o credentiala reparata pe disc e preluata fara repornire",
+   "fisiere": [
+    "agent.py",
+    "services/agent_credentials.py",
+    "services/event_dispatcher.py",
+    "tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 197,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4bfab22",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T21:16:40+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): un secret salvat cu BOM nu mai opreste agentul cu traceback",
+   "fisiere": [
+    "services/agent_credentials.py",
+    "tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 100,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "d665f3d",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T21:09:41+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(auth): un secret non-ASCII primeste refuz, nu eroare de server",
+   "fisiere": [
+    "app/services/auth_service.py",
+    "app/tests/test_api_authentication.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 78,
+   "linii_sterse": 3
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "b4b695c",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T20:39:40+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): autentificare pe API, fara ca un 401 sa stearga evenimente",
+   "fisiere": [
+    ".gitignore",
+    "agent.py",
+    "config.json",
+    "services/agent_credentials.py",
+    "services/auth_alarm.py",
+    "services/config_loader.py",
+    "services/event_dispatcher.py",
+    "services/transport.py",
+    "tests/test_api_authentication.py",
+    "tests/test_heartbeat_payload.py"
+   ],
+   "numar_fisiere": 10,
+   "linii_adaugate": 1576,
+   "linii_sterse": 43
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "045100b",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T20:39:24+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): adauga AUTH.md, contractul de antete al autentificarii",
+   "fisiere": [
+    "contracts/AUTH.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 189,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "1011351",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T20:35:34+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(auth): cheie de API per agent, legata de agent_id-ul din corp",
+   "fisiere": [
+    ".gitignore",
+    "app/conftest.py",
+    "app/routes/agents.py",
+    "app/routes/events.py",
+    "app/routes/heartbeat.py",
+    "app/security.py",
+    "app/services/auth_service.py",
+    "app/tests/support.py",
+    "app/tests/test_agent_routes_integration.py",
+    "app/tests/test_api_authentication.py",
+    "app/tests/test_heartbeat_sequence.py"
+   ],
+   "numar_fisiere": 11,
+   "linii_adaugate": 1184,
+   "linii_sterse": 19
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "5f40087",
+   "data": "2026-08-23",
+   "data_iso": "2026-08-23T20:35:15+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): adauga AUTH.md, contractul de antete al autentificarii",
+   "fisiere": [
+    "app/tests/test_wire_contract.py",
+    "contracts/AUTH.md"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 235,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "7176e16",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:56:47+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(events): accepta statusurile v4 si verifica invarianta pe hasher-ul real",
+   "fisiere": [
+    "app/schemas/event.py",
+    "app/tests/test_event_hash_contract.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 127,
+   "linii_sterse": 18
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "542105f",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:56:08+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "test(contracts): verificarile cross-repo nu mai tac pe o masina de integrare",
+   "fisiere": [
+    "app/tests/test_wire_contract.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 62,
+   "linii_sterse": 10
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "f928b64",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:55:11+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza contractul de fir la v4",
+   "fisiere": [
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 11,
+   "linii_sterse": 8
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "b18a878",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:54:51+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): reglajele fluxului de fisiere vin din config, nu din cod",
+   "fisiere": [
+    "agent.py",
+    "config.json",
+    "services/config_loader.py",
+    "services/file_monitor.py",
+    "tests/test_file_pipeline_tuning.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 412,
+   "linii_sterse": 3
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "2a2e382",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:54:05+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "test(contracts): verificarile cross-repo nu mai tac pe o masina de integrare",
+   "fisiere": [
+    "tests/test_payload_contracts.py",
+    "tests/wire_contract.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 70,
+   "linii_sterse": 10
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "e119a05",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:53:28+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): nu mai inchide coada de evenimente sub un fir inca viu",
+   "fisiere": [
+    "agent.py",
+    "tests/test_agent_startup.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 52,
+   "linii_sterse": 6
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "062df7d",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:52:25+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(monitor): calculeaza SHA-256 pe un fir propriu, cu verificare dubla",
+   "fisiere": [
+    "services/file_event.py",
+    "services/file_hasher.py",
+    "services/file_monitor.py",
+    "services/settle_tracker.py",
+    "tests/test_file_hasher.py",
+    "tests/test_file_monitor_shutdown.py",
+    "tests/test_payload_contracts.py",
+    "tests/test_settle_releaser.py",
+    "tests/test_settle_tracker.py"
+   ],
+   "numar_fisiere": 9,
+   "linii_adaugate": 3138,
+   "linii_sterse": 1300
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "fe99154",
+   "data": "2026-08-21",
+   "data_iso": "2026-08-21T17:51:35+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza contractul de fir la v4",
+   "fisiere": [
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 11,
+   "linii_sterse": 8
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "a9a8f0b",
+   "data": "2026-08-20",
+   "data_iso": "2026-08-20T21:29:02+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(monitor): leaga SettleTracker in fluxul real si inlocuieste EventDebouncer",
+   "fisiere": [
+    "services/file_monitor.py",
+    "tests/test_event_debouncer.py",
+    "tests/test_payload_contracts.py",
+    "tests/test_settle_releaser.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 697,
+   "linii_sterse": 519
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "9ac99ea",
+   "data": "2026-08-20",
+   "data_iso": "2026-08-20T19:56:05+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(monitor): SettleTracker — decide cand un fisier a incetat sa se schimbe",
+   "fisiere": [
+    "requirements.txt",
+    "services/file_monitor.py",
+    "services/settle_tracker.py",
+    "tests/test_settle_tracker.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 629,
+   "linii_sterse": 9
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "9bf3c30",
+   "data": "2026-08-20",
+   "data_iso": "2026-08-20T14:39:36+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore: refresh GitHub contributors",
+   "fisiere": [],
+   "numar_fisiere": 0,
+   "linii_adaugate": 0,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "010639e",
+   "data": "2026-08-19",
+   "data_iso": "2026-08-19T18:18:57+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(events): extinde EventCreateRequest cu hash_status, file_size si measurements (contract v3)",
+   "fisiere": [
+    "app/schemas/event.py",
+    "app/services/event_service.py",
+    "app/tests/test_event_hash_contract.py",
+    "app/tests/test_wire_contract.py",
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 193,
+   "linii_sterse": 7
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "46f4f5f",
+   "data": "2026-08-19",
+   "data_iso": "2026-08-19T18:14:10+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza contractul de fir la v3 (hash_status, file_size, measurements)",
+   "fisiere": [
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 17,
+   "linii_sterse": 4
+  },
   {
    "depozit": "edr-agent",
    "hash": "224fe28",
