@@ -179,6 +179,52 @@ alimentat cu fișierele integrale. O etichetă greșită afectează identic cele
 părți și se anulează. Etichetele contează pentru `METRICS.md` §5, care e context,
 nu afirmație.
 
+## Ordinea de adăugare, fixată {#invariant}
+
+`METRICS.md` §3.1 cere ca endpoint-urile să se adauge eșalonat, cu ordinea
+fixată înainte de măsurătoare: pornite simultan, costul marginal nu se poate
+atribui nimănui. Ordinea e deci parte din montaj, nu detaliu de execuție.
+
+**Ordinea e `endpoint01 → endpoint02 → endpoint03 → endpoint04 → endpoint05`**,
+adică numerotarea produsă de repartiția determinată de sămânța `20260831`.
+
+Nu poate favoriza rezultatul, și se vede din cifre:
+
+| Endpoint | Fișiere | Unice | Unic (MB) | Malițioase |
+|---|---|---|---|---|
+| endpoint01 | 1157 | 111 | 1294 | 78 |
+| endpoint02 | 1157 | 111 | 923 | 78 |
+| endpoint03 | 1157 | 111 | 682 | 78 |
+| endpoint04 | 1157 | 111 | 902 | 78 |
+| endpoint05 | 1156 | 110 | 1232 | 78 |
+
+Numărul de fișiere, numărul de unice și numărul de mostre malițioase sunt
+practic identice pe toate cinci. Singura mărime care variază e volumul în
+octeți al părții unice, iar ordinea aleasă nu e sortată după el — nici crescător,
+nici descrescător. O ordine care ar fi pus mașina cu 1294 MB unici prima și pe
+cea cu 682 MB ultima ar fi umflat panta curbei; aici pantă nu se poate fabrica
+din ordine.
+
+**Ce înseamnă „adăugat".** Un endpoint intră în parc singur: primește corpusul
+lui, îl procesează integral, iar următorul pornește abia după ce cel anterior
+s-a stabilizat — fără evenimente noi timp de zece minute după ultimul lot.
+Serverul nu se repornește și nu se golește între endpoint-uri: tocmai
+cunoașterea acumulată de la mașinile anterioare e mecanismul măsurat.
+
+**Mașinile rulează pe rând, nu simultan.** Gazda are 16 GB de memorie, iar cinci
+mașini plus serverul n-ar încăpea. Constrângerea nu atinge afirmația principală:
+ce ieftinește al cincilea endpoint e ce știe serverul din trecut, nu ce se
+întâmplă în paralel. Dar limitează ce se poate revendica — niciun rezultat de
+aici nu spune nimic despre comportamentul sub sarcină concurentă, nici despre
+continuitatea parcului cu cinci agenți vii deodată.
+
+**Predicția pentru marginal**, cerută tot de §3.1, se poate calcula deocamdată
+doar parțial: fiecare endpoint are 1157 de fișiere, deci trimite cel puțin tot
+atâtea evenimente T0, la câteva sute de octeți fiecare — ordinul de mărime e
+jumătate de megaoctet, înainte de orice escaladare. Termenul complet, cu podeaua
+canalului de control și cu escaladările, se estimează când treptele T1-T3 vor
+exista, și se compară cu măsurătoarea după.
+
 ## Ce urmează {#urmeaza}
 
 Verificarea la VirusTotal e pornită și rămâne parțială prin construcție: ~4
