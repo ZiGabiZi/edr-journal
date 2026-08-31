@@ -42,20 +42,60 @@ există deja, cu hash-urile celor 1494 de fișiere.
 peste 100 KB — 900 (60,2%).
 
 **Suprapunere între endpoint-uri (§6):** 1046 comune (70,0%), 448 unice (30,0%),
-repartizate pe 5 endpoint-uri, câte 89-90 de fișiere unice fiecare, dintre care
-61-70 malițioase. Stratul de stres e integral în partea unică, conform §6.3.
+pe 5 endpoint-uri. Cotul unic e gradat pe 1-3 mașini, conform §6.4:
+
+| Apare pe | Fișiere | din care malițioase |
+|---|---|---|
+| 1 mașină | 363 (24,3%) | 280 |
+| 2 mașini | 64 (4,3%) | 40 |
+| 3 mașini | 21 (1,4%) | 10 |
+| toate 5 | 1046 (70,0%) | 0 |
+
+5784 de plasări în parc, adică 3,87 mașini în medie per fișier. Fiecare endpoint
+primește 110-111 fișiere din cotul unic, dintre care 78 malițioase.
 
 **Sămânța repartiției:** `20260831`. Aceeași sămânță și aceleași jurnale produc
 aceeași repartiție; e scrisă în `manifest.json` alături de praguri și cote.
 
-**Manifestul,** generat la `2026-08-31T20:47:10Z`:
-`manifest.csv`, 310.379 octeți,
-SHA-256 `756489962467b6694c6c1b97dee59481c81f216a202062a666c3a135fcbebbb0`.
+**Amprenta compoziției:**
+`37fbf57dc9dfda667fa93ff8ab6a8c67dd064e53a6ce382a3f6697fee689afe5`.
 
-Hash-ul e aici ca orice modificare ulterioară să fie vizibilă. Fișierul **va**
-mai fi rescris — coloanele `vt_checked`, `vt_detections` și `vs_md5_present` se
-completează pe măsură ce avansează verificarea externă. Orice altă diferență
-față de starea de azi ar fi o rescriere a montajului după fixare.
+Nu e hash-ul fișierului `manifest.csv`, și distincția contează. Fișierul acela se
+rescrie la fiecare rulare de verificare, fiindcă i se completează coloanele
+`vt_checked`, `vt_detections` și `vs_md5_present` — un hash al lui ar expira în
+câteva ore și n-ar ancora nimic. Amprenta de mai sus acoperă numai coloanele care
+descriu compoziția: ce fișiere sunt în corpus, cât de mari sunt, cum sunt
+etichetate, în ce strat și pe ce mașini apar. Se calculează la fiecare rulare a
+manifestului și se scrie în `manifest.json`.
+
+Cât timp amprenta rămâne aceeași, corpusul e cel pre-înregistrat aici. Dacă se
+schimbă după prima măsurătoare, s-a rescris montajul — exact ce interzice §1.1.
+
+## Amendament, în aceeași zi {#schimbat}
+
+Prima variantă a repartiției punea fiecare fișier unic pe exact o mașină. Era
+mai strictă decât §6.3, care spune „pe **una sau două** mașini", și avea o
+consecință pe care n-am văzut-o până n-am numărat: **prevalența lua exact două
+valori**, 1 și 5. Nimic la mijloc.
+
+Asta desființa tăcut jumătate din ce pretinde lucrarea. Deduplicarea și
+escaladarea conștientă de prevalență sunt afirmații despre o relație — cu cât un
+fișier e mai răspândit, cu atât costul lui marginal e mai mic — iar o relație
+măsurată în două puncte nu se poate distinge de nicio altă formă care trece prin
+ele. Cazul în care mecanismul chiar decide ceva, fișierul văzut pe două-trei
+mașini, lipsea cu totul din corpus, prin construcție.
+
+`CORPUS.md` a căpătat deci o secțiune nouă, §6.4, cu forma gradată a cotului
+unic — 70/20/10 pentru benigne, 85/12/3 pentru malițioase — iar manifestul a fost
+regenerat. Amprenta anterioară a compoziției, acum înlocuită, corespundea unui
+`manifest.csv` de 310.379 de octeți cu SHA-256
+`756489962467b6694c6c1b97dee59481c81f216a202062a666c3a135fcbebbb0`.
+
+Modificarea e legitimă acum și ar fi fost imposibil de justificat peste o zi:
+**nicio treaptă de divulgare n-a rulat încă peste corpus.** Nu s-a schimbat nimic
+ca reacție la un rezultat, fiindcă nu există niciun rezultat. Rămâne totuși o
+revizuire a unui document de pre-înregistrare, deci se scrie aici, cu ora și cu
+motivul, nu se rescrie tăcut secțiunea de mai sus.
 
 ## Cum a fost obținut {#provenienta}
 
@@ -83,7 +123,7 @@ curat făcut înainte de prima descărcare. Nimic nu s-a executat.
 
 ## Abaterile, declarate {#cost}
 
-Cinci diferențe față de `CORPUS.md`. Toate sunt cunoscute înainte de măsurătoare,
+Șase diferențe față de `CORPUS.md`. Toate sunt cunoscute înainte de măsurătoare,
 și niciuna nu se corectează retroactiv.
 
 **Fracțiunea malițioasă e 22,1%, nu 20%.** Selecția a cerut 330 de mostre în loc
@@ -107,6 +147,13 @@ avertizează explicit că umplerea corpusului cu fișiere minuscule ar fi trucar
 nu expun versiuni prin winget, altele nu livrează instalatorul pentru descărcare.
 Volumul de 27,4 GB provine din mai multe versiuni ale acelorași aplicații — ceea
 ce e și intenția §3.2, nu doar o soluție de volum.
+
+**Prevalența n-are valoarea 4.** Cotul unic urcă până la 3 mașini, cel comun stă
+la 5; între ele nu există nimic. Cu 5 endpoint-uri, un fișier pe 4 mașini ar fi
+practic comun, iar granița dintre cele două categorii ar deveni arbitrară. Curba
+prevalenței are deci patru puncte — 1, 2, 3 și 5 — dintre care cel de la 3 se
+sprijină pe 21 de fișiere, iar cel de la 2 pe 64. Se raportează cu numărul de
+fișiere sub fiecare punct, nu ca o curbă netedă.
 
 **VirusShare n-a confirmat nimic.** 262.144 de MD5 din listele 00496-00499, zero
 potriviri pe cele 330 de mostre malițioase. Explicația nu e că mostrele n-ar fi
