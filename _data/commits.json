@@ -1,11 +1,461 @@
 {
- "generat_la": "2026-08-27T19:33:33Z",
+ "generat_la": "2026-08-31T21:15:42Z",
  "depozite": [
   "edr-agent",
   "edr-server"
  ],
- "total": 109,
+ "total": 134,
  "commituri": [
+  {
+   "depozit": "edr-server",
+   "hash": "3692d86",
+   "data": "2026-08-31",
+   "data_iso": "2026-08-31T03:16:28+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): adauga CORPUS.md, specificatia de proiectare a corpusului",
+   "fisiere": [
+    "contracts/CORPUS.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 325,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "e4f5f97",
+   "data": "2026-08-31",
+   "data_iso": "2026-08-31T03:15:43+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): adauga CORPUS.md, specificatia de proiectare a corpusului",
+   "fisiere": [
+    "contracts/CORPUS.md",
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 490,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "580424e",
+   "data": "2026-08-31",
+   "data_iso": "2026-08-31T00:21:09+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza METRICS.md cu rularea de masuratoare",
+   "fisiere": [
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 165,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "a8065e2",
+   "data": "2026-08-31",
+   "data_iso": "2026-08-31T00:15:50+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): fiecare cifra spune din ce experiment vine",
+   "fisiere": [
+    "app/routes/events.py",
+    "app/routes/metrics.py",
+    "app/routes/runs.py",
+    "app/routes/scope.py",
+    "app/services/event_service.py",
+    "app/services/event_store.py",
+    "app/tests/test_metrics_by_run.py"
+   ],
+   "numar_fisiere": 7,
+   "linii_adaugate": 716,
+   "linii_sterse": 47
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "f9fa9c2",
+   "data": "2026-08-31",
+   "data_iso": "2026-08-31T00:04:46+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(events): depozitul de evenimente ajunge pe disc",
+   "fisiere": [
+    ".gitignore",
+    "app/conftest.py",
+    "app/routes/events.py",
+    "app/routes/metrics.py",
+    "app/services/event_service.py",
+    "app/services/event_store.py",
+    "app/services/measurement_run.py",
+    "app/services/wire_accounting.py",
+    "app/tests/test_api_authentication.py",
+    "app/tests/test_event_store.py",
+    "app/tests/test_heartbeat_sequence.py",
+    "app/tests/test_measurement_run.py"
+   ],
+   "numar_fisiere": 12,
+   "linii_adaugate": 902,
+   "linii_sterse": 74
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "7114adc",
+   "data": "2026-08-30",
+   "data_iso": "2026-08-30T18:25:15+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): evenimentele stiu din ce experiment fac parte",
+   "fisiere": [
+    "app/conftest.py",
+    "app/main.py",
+    "app/routes/runs.py",
+    "app/security.py",
+    "app/services/event_service.py",
+    "app/services/measurement_run.py",
+    "app/tests/test_measurement_run.py"
+   ],
+   "numar_fisiere": 7,
+   "linii_adaugate": 673,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "cf193fd",
+   "data": "2026-08-30",
+   "data_iso": "2026-08-30T17:01:51+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza METRICS.md cu adoptia si directia estimatorului",
+   "fisiere": [
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 134,
+   "linii_sterse": 24
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "fc839fd",
+   "data": "2026-08-30",
+   "data_iso": "2026-08-30T16:55:50+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "test(server): suita nu mai scrie in server.log",
+   "fisiere": [
+    "app/conftest.py"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 53,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "3f93321",
+   "data": "2026-08-30",
+   "data_iso": "2026-08-30T15:19:15+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(metrics): o incarnare prinsa din mers e linie de baza, nu discrepanta",
+   "fisiere": [
+    "app/services/wire_accounting.py",
+    "app/tests/test_wire_adoption.py",
+    "app/tests/test_wire_reconciliation.py",
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 342,
+   "linii_sterse": 19
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "980f61e",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T19:36:00+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): alarma la discrepanta persistenta inchide 1.3b",
+   "fisiere": [
+    "app/conftest.py",
+    "app/services/wire_accounting.py",
+    "app/services/wire_alarm.py",
+    "app/tests/test_wire_alarm.py",
+    "app/wire_middleware.py",
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 636,
+   "linii_sterse": 7
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "c3f6c6d",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T19:28:20+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): numaratorul publicat devine cel masurat",
+   "fisiere": [
+    "app/routes/metrics.py",
+    "app/services/disclosure_metrics.py",
+    "app/tests/test_measured_numerator.py",
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 395,
+   "linii_sterse": 15
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "13d48ea",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T19:20:53+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): serverul masoara octetii pe canale, ca agentul",
+   "fisiere": [
+    "app/services/wire_accounting.py",
+    "app/tests/test_wire_accounting.py",
+    "app/wire_middleware.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 249,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "0ec4354",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T19:10:56+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "test(metrics): reinregistrarea care isi declara incarnarea e atribuita",
+   "fisiere": [
+    "app/tests/test_wire_accounting.py",
+    "app/tests/test_wire_reconciliation.py",
+    "contracts/METRICS.md",
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 91,
+   "linii_sterse": 29
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "3516703",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T19:09:37+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "fix(agent): incarnarea pleaca si la inregistrare, pe antet",
+   "fisiere": [
+    "agent.py",
+    "contracts/METRICS.md",
+    "contracts/wire-contract.json",
+    "services/transport.py",
+    "tests/test_api_authentication.py",
+    "tests/test_transport_accounting.py"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 156,
+   "linii_sterse": 32
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "a26109c",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T19:00:12+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "docs(contracts): stadiul din 7.5 nu mai ascunde ca 1.3b.6 e deschis",
+   "fisiere": [
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 12,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "48e1a7f",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T18:59:36+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "chore(contracts): sincronizeaza METRICS.md cu sectiunea 7.4",
+   "fisiere": [
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 81,
+   "linii_sterse": 13
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "c536529",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T18:27:33+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): reconcilierea agent-server intra in metrica de divulgare",
+   "fisiere": [
+    "app/routes/metrics.py",
+    "app/services/wire_accounting.py",
+    "app/tests/test_wire_reconciliation.py",
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 483,
+   "linii_sterse": 14
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "f768510",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T18:09:54+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(metrics): serverul contabilizeaza octetii primiti, pe incarnare",
+   "fisiere": [
+    "app/conftest.py",
+    "app/main.py",
+    "app/services/wire_accounting.py",
+    "app/tests/test_wire_accounting.py",
+    "app/wire_middleware.py",
+    "contracts/METRICS.md"
+   ],
+   "numar_fisiere": 6,
+   "linii_adaugate": 948,
+   "linii_sterse": 9
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "4fa8fbc",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T17:54:56+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): incarnarea calatoreste si pe antet, nu doar in corp",
+   "fisiere": [
+    "contracts/METRICS.md",
+    "services/transport.py",
+    "tests/test_transport_accounting.py"
+   ],
+   "numar_fisiere": 3,
+   "linii_adaugate": 117,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "fa77dee",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T17:46:03+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): anteturile declara cati octeti a pus agentul pe fir",
+   "fisiere": [
+    "contracts/METRICS.md",
+    "services/transport.py",
+    "tests/test_transport_accounting.py",
+    "tests/test_wire_serialization.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 299,
+   "linii_sterse": 17
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "7d28888",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T16:43:11+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): fiecare cerere POST trece prin registrul de fir",
+   "fisiere": [
+    "services/transport.py",
+    "services/wire_ledger.py",
+    "tests/test_transport_accounting.py",
+    "tests/test_wire_serialization.py"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 402,
+   "linii_sterse": 4
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "3e6a013",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T16:33:42+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): registrul de fir numara octetii pusi efectiv pe cablu",
+   "fisiere": [
+    "services/wire_ledger.py",
+    "tests/test_wire_ledger.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 514,
+   "linii_sterse": 0
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "29f7042",
+   "data": "2026-08-29",
+   "data_iso": "2026-08-29T15:39:58+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "refactor(transport): agentul serializeaza singur corpul cererilor POST",
+   "fisiere": [
+    "services/transport.py",
+    "tests/test_wire_serialization.py"
+   ],
+   "numar_fisiere": 2,
+   "linii_adaugate": 301,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "c4353e2",
+   "data": "2026-08-28",
+   "data_iso": "2026-08-28T17:54:06+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(agent): evenimentele de fisier isi declara treapta de divulgare",
+   "fisiere": [
+    "contracts/METRICS.md",
+    "contracts/wire-contract.json",
+    "services/file_event.py",
+    "tests/test_disclosure_tier.py",
+    "tests/test_payload_contracts.py"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 677,
+   "linii_sterse": 3
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "0465c4b",
+   "data": "2026-08-28",
+   "data_iso": "2026-08-28T17:51:55+03:00",
+   "luna": "2026-08",
+   "luna_afisata": "august 2026",
+   "mesaj": "feat(events): v5 adauga blocul disclosure si atribuirea pe trepte",
+   "fisiere": [
+    "app/schemas/event.py",
+    "app/services/disclosure_metrics.py",
+    "app/services/event_service.py",
+    "app/tests/test_disclosure_metrics.py",
+    "app/tests/test_disclosure_tier.py",
+    "app/tests/test_event_hash_contract.py",
+    "app/tests/test_wire_contract.py",
+    "contracts/METRICS.md",
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 9,
+   "linii_adaugate": 1037,
+   "linii_sterse": 49
+  },
   {
    "depozit": "edr-agent",
    "hash": "a88f596",
@@ -1471,7 +1921,7 @@
    "depozit": "edr-server",
    "hash": "7ed592f",
    "data": "2026-06-27",
-   "data_iso": "2026-06-27T15:13:25Z",
+   "data_iso": "2026-06-27T15:13:25+00:00",
    "luna": "2026-06",
    "luna_afisata": "iunie 2026",
    "mesaj": "feat(agents): implement dedicated heartbeat endpoint and C2 directives",
@@ -1617,7 +2067,7 @@
    "depozit": "edr-server",
    "hash": "ba78fa1",
    "data": "2026-06-19",
-   "data_iso": "2026-06-19T13:11:57Z",
+   "data_iso": "2026-06-19T13:11:57+00:00",
    "luna": "2026-06",
    "luna_afisata": "iunie 2026",
    "mesaj": "Final architecture",
@@ -1634,7 +2084,7 @@
    "depozit": "edr-server",
    "hash": "5a1b023",
    "data": "2026-06-19",
-   "data_iso": "2026-06-19T13:03:30Z",
+   "data_iso": "2026-06-19T13:03:30+00:00",
    "luna": "2026-06",
    "luna_afisata": "iunie 2026",
    "mesaj": "Test",
@@ -1649,7 +2099,7 @@
    "depozit": "edr-server",
    "hash": "acaaa5c",
    "data": "2026-06-19",
-   "data_iso": "2026-06-19T13:02:09Z",
+   "data_iso": "2026-06-19T13:02:09+00:00",
    "luna": "2026-06",
    "luna_afisata": "iunie 2026",
    "mesaj": "Removed unnecesary files",
@@ -1665,7 +2115,7 @@
    "depozit": "edr-server",
    "hash": "23700c0",
    "data": "2026-06-19",
-   "data_iso": "2026-06-19T12:53:26Z",
+   "data_iso": "2026-06-19T12:53:26+00:00",
    "luna": "2026-06",
    "luna_afisata": "iunie 2026",
    "mesaj": "Test",
@@ -1733,7 +2183,7 @@
    "depozit": "edr-server",
    "hash": "42fd5b5",
    "data": "2026-06-07",
-   "data_iso": "2026-06-07T22:25:35Z",
+   "data_iso": "2026-06-07T22:25:35+00:00",
    "luna": "2026-06",
    "luna_afisata": "iunie 2026",
    "mesaj": "Extending agent data informations",
@@ -1824,7 +2274,7 @@
    "depozit": "edr-server",
    "hash": "ba27d06",
    "data": "2026-05-31",
-   "data_iso": "2026-05-31T21:40:57Z",
+   "data_iso": "2026-05-31T21:40:57+00:00",
    "luna": "2026-05",
    "luna_afisata": "mai 2026",
    "mesaj": "Initial EDR backend structure",
