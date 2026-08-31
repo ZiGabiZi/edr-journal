@@ -8,6 +8,14 @@ github_user: ZiGabiZi   # folosit pentru link-urile din `commits`
 
 theme: minima
 
+# Datele intrarilor sunt scrise in ora locala a autorului (UTC+3), iar GitHub
+# Pages compileaza in UTC. Fara cele doua linii de mai jos, o intrare scrisa
+# dupa ora 21:00 locala apare in liste dar pagina ei nu se scrie: Jekyll o
+# considera datata in viitor si o exclude din documentele scrise, desi o
+# pastreaza in site.intrari. Simptomul e 404 pe un link care exista in index.
+timezone: Europe/Bucharest
+future: true
+
 exclude:
   - scripts/       # unealtă de build, nu conținut publicabil
   - Gemfile
