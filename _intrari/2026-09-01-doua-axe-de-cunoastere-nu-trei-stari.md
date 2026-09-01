@@ -6,9 +6,9 @@ rezumat: Depozitul de reputație întoarce două axe independente și un scor or
 tags: [reputatie, pdp, infrastructura]
 capitol: "2.6"
 componente: server
-commits: []
+commits: [edr-server@c5acdb7, edr-server@fab865d, edr-server@ae5a8cd, edr-server@c412f61, edr-agent@b768e11]
 teste: []
-status: partial
+status: rezolvat
 ---
 
 ## Context {#context}
@@ -271,6 +271,44 @@ Pe axa de noutate, un fals pozitiv declară cunoscut un fișier nou și suprimă
 escaladarea — o ratare prin proiectare, exact ce interzice §5.4. Pe axa de
 amenințare e acceptabil doar dacă apartenența *declanșează* escaladare, nu dacă
 *produce* verdict. Permis pe o axă, interzis pe cealaltă.
+
+## Amendament: ce a ieșit {#schimbat}
+
+Intrarea a fost scrisă înainte de prima linie de cod și înainte de orice
+descărcare. Toate cele douăsprezece decizii au fost implementate; ce urmează e
+diferența dintre ce s-a prezis și ce s-a măsurat.
+
+**Pragul R1 s-a decis integral, iar proiecția a fost exactă.** Dimensiunea
+instantaneului a fost estimată înainte de descărcare, dintr-un fișier de 751 de
+octeți publicat de NIST — 72.015.285 de amprente distincte — și dintr-o
+măsurătoare pe 500.000 de rânduri false: 45,60 octeți pe rând, 3,06 GB.
+Rezultatul real: 45,6 octeți pe rând, 3,06 GB. Marja față de prag e de peste
+șase ori, deci subsetul „pachete de sistem Windows" nu s-a mai definit niciodată.
+
+**Două tăieturi de schemă, făcute cât erau gratis.** Indexul pe cele două axe a
+fost scos: măsurat, costa 39,5 octeți pe rând — cât un rând întreg minimal — ca
+să economisească minute într-o raportare rulată o dată. Sursa a devenit întreg în
+loc de nume repetat pe fiecare rând. Amândouă au fost posibile exact fiindcă
+schema s-a scris înaintea importului; după, ar fi cerut reimport.
+
+**Suprapunerea e zero, iar unul dintre argumentele mele nu s-a confirmat.**
+Alegerea celor două axe a fost sprijinită, printre altele, pe ideea că celula de
+suprapunere e cea interesantă și că un enum ar face-o imposibil de reconstruit.
+Niciun hash din inventarul de amenințări nu apare în RDS, deci celula e goală.
+Decizia rămâne corectă din motivul structural — `CORPUS.md` §5.4 interzice ca RDS
+să producă verdictul curat, iar un enum n-ar fi avut unde să pună adevărul — dar
+celula goală nu confirmă argumentul, doar nu-l infirmă.
+
+**Un cost pe care nu-l bugetasem.** Intrarea a mutat construirea în afara
+serverului și a declarat problema spațiului tranzitoriu rezolvată, dar n-a
+bugetat-o la noua adresă. Pe gazdă, importul a cerut 18,8 GB arhivă plus 169 GiB
+bază NIST dezarhivată — mult peste ordinul de mărime pe care îl estimasem — pe
+același disc pe care stau mașinile virtuale. A încăput, cu mașinile oprite.
+
+**Rezultatele de acoperire** sunt la
+[intrarea de măsurătoare]({{ '/intrari/2026-09-01-cat-stie-depozitul-despre-corpus/' | relative_url }}):
+38,5% din corpus cunoscut în brațul rece, 60,6% în cel semiînzestrat, ambele
+verificări de sănătate trecute.
 
 ## Ce am învățat {#invatat}
 
