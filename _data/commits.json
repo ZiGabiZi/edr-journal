@@ -1,11 +1,116 @@
 {
- "generat_la": "2026-09-01T22:07:09Z",
+ "generat_la": "2026-09-01T23:09:47Z",
  "depozite": [
   "edr-agent",
   "edr-server"
  ],
- "total": 148,
+ "total": 154,
  "commituri": [
+  {
+   "depozit": "edr-agent",
+   "hash": "d04bdb2",
+   "data": "2026-09-02",
+   "data_iso": "2026-09-02T01:59:57+03:00",
+   "luna": "2026-09",
+   "luna_afisata": "septembrie 2026",
+   "mesaj": "chore(contracts): v8 adauga dispozitia de reputatie in raspuns",
+   "fisiere": [
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 25,
+   "linii_sterse": 3
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "eab31a6",
+   "data": "2026-09-02",
+   "data_iso": "2026-09-02T01:59:47+03:00",
+   "luna": "2026-09",
+   "luna_afisata": "septembrie 2026",
+   "mesaj": "feat(reputatie): v8 consulta depozitul la ingestie si persista dispozitia",
+   "fisiere": [
+    "app/conftest.py",
+    "app/schemas/event.py",
+    "app/services/event_service.py",
+    "app/services/event_store.py",
+    "app/services/reputation_disposition.py",
+    "app/services/reputation_store.py",
+    "app/tests/test_reputation_disposition.py",
+    "app/tests/test_wire_contract.py",
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 9,
+   "linii_adaugate": 746,
+   "linii_sterse": 9
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "c786567",
+   "data": "2026-09-02",
+   "data_iso": "2026-09-02T01:43:16+03:00",
+   "luna": "2026-09",
+   "luna_afisata": "septembrie 2026",
+   "mesaj": "chore(contracts): v7 impune forma hash-ului la granita",
+   "fisiere": [
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 2,
+   "linii_sterse": 2
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "60ce429",
+   "data": "2026-09-02",
+   "data_iso": "2026-09-02T01:43:05+03:00",
+   "luna": "2026-09",
+   "luna_afisata": "septembrie 2026",
+   "mesaj": "feat(events): v7 impune forma hash-ului la granita",
+   "fisiere": [
+    "app/schemas/event.py",
+    "app/tests/test_event_hash_contract.py",
+    "app/tests/test_metrics_by_run.py",
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 4,
+   "linii_adaugate": 137,
+   "linii_sterse": 3
+  },
+  {
+   "depozit": "edr-agent",
+   "hash": "52fa481",
+   "data": "2026-09-02",
+   "data_iso": "2026-09-02T01:16:17+03:00",
+   "luna": "2026-09",
+   "luna_afisata": "septembrie 2026",
+   "mesaj": "chore(contracts): v6 declara raspunsul rutei de evenimente",
+   "fisiere": [
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 1,
+   "linii_adaugate": 53,
+   "linii_sterse": 1
+  },
+  {
+   "depozit": "edr-server",
+   "hash": "96bcbfc",
+   "data": "2026-09-02",
+   "data_iso": "2026-09-02T01:16:09+03:00",
+   "luna": "2026-09",
+   "luna_afisata": "septembrie 2026",
+   "mesaj": "feat(events): v6 declara raspunsul rutei de evenimente",
+   "fisiere": [
+    "app/routes/events.py",
+    "app/schemas/event.py",
+    "app/tests/test_event_contract.py",
+    "app/tests/test_wire_contract.py",
+    "contracts/wire-contract.json"
+   ],
+   "numar_fisiere": 5,
+   "linii_adaugate": 174,
+   "linii_sterse": 12
+  },
   {
    "depozit": "edr-server",
    "hash": "c7aefcc",

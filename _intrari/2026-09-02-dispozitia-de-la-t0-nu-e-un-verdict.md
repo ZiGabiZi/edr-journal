@@ -6,9 +6,9 @@ rezumat: Ce întoarce serverul la ingestia unui eveniment cu hash e o dispoziți
 tags: [pdp, contract, reputatie]
 capitol: "2.4"
 componente: ambele
-commits: []
-teste: []
-status: deschis
+commits: [edr-server@96bcbfc, edr-server@60ce429, edr-server@eab31a6, edr-agent@52fa481, edr-agent@c786567, edr-agent@d04bdb2]
+teste: [app/tests/test_event_contract.py::test_event_response_declares_every_stored_field, app/tests/test_event_hash_contract.py::test_sha256_with_whitespace_is_rejected_although_fromhex_would_accept_it, app/tests/test_reputation_disposition.py::test_a_hash_from_rds_is_known_software_and_never_a_benign_word, app/tests/test_reputation_disposition.py::test_an_unreachable_snapshot_is_not_unknown, app/tests/test_reputation_disposition.py::test_a_retransmission_keeps_the_disposition_of_the_first_arrival]
+status: partial
 ---
 
 ## Context {#context}
@@ -284,6 +284,74 @@ rulare" înseamnă scanare, nu index — depozitul de evenimente are coloane doa
 pentru `run_id`, `agent_id`, `client_event_id` și `received_at`. Acceptat: dacă
 cifra devine scumpă, răspunsul e un tabel derivat, nu o coloană nouă. Payload-ul
 rămâne singurul adevăr.
+
+## Amendament: ce a ieșit {#schimbat}
+
+Intrarea a fost scrisă înainte de prima linie de cod. Cinci din cei șase pași
+sunt livrați, în trei versiuni de contract — v6 declară răspunsul, v7 impune
+forma hash-ului, v8 aduce dispoziția. Ce urmează e diferența dintre ce prezicea
+intrarea și ce a ieșit.
+
+**Pașii 3 și 4 nu s-au putut separa, iar asta e o veste bună.** Intrarea îi
+enumeră ca etape distincte: întâi consultarea și persistarea, apoi câmpurile în
+răspuns. În practică, în clipa în care dispoziția a intrat în payload, suita a
+picat cu exact un test — garda scrisă la v6, care cere ca evenimentul stocat și
+modelul de răspuns să declare aceleași câmpuri. Separarea era imposibilă prin
+construcție. Nu e o scăpare a planului, ci proprietatea pe care F7 o cumpărase
+fără să o numească: „persistat pe server" și „declarat pe fir" nu mai pot
+diverge. Singura excepție rămâne amprenta instantaneului, și tocmai de aceea nu
+se persistă pe eveniment.
+
+**`EventResponse` îi lipsea `run_id`, iar intrarea n-a văzut asta.** F7 spunea
+că modelul încetează să fie cod mort și că adoptarea lui nu schimbă niciun octet
+pe fir. A doua jumătate era falsă și s-a văzut abia la implementare: ruta trimite
+`run_id` de la 1.4.2 încoace, modelul nu-l declara, iar un model de răspuns
+filtrează, nu completează. Adoptat literal, commit-ul care promitea „zero
+schimbare" ar fi șters un câmp de pe fir. Promisiunea s-a păstrat verificând-o,
+nu afirmând-o: răspunsul nou a fost comparat octet cu octet cu corpul produs de
+dicționarul de dinainte.
+
+**Două decizii au apărut la implementare, fiindcă intrarea nu acoperea cazul.**
+Prima: majusculele în `sha256`. F10 fixa formatul, nu și notația. Se acceptă și
+se coboară la minuscule — sunt același hash scris altfel, deci un 422 ar șterge
+din spool un eveniment corect, dar șirul se și stochează, iar prevalența se
+numără pe hash-uri distincte, unde două scrieri ale aceluiași hash ar deveni
+două fișiere. A doua: `reputation` e interzis pe cerere. Dispoziția se produce pe
+server; un endpoint care și-ar declara singur reputația ar face memoria
+partajată să depindă de ce afirmă mașina observată.
+
+**Argumentul de la F8 era corect, dar socoteala era incompletă.** Intrarea a
+mutat identitatea instantaneului la nivel de rulare fiindcă
+`snapshot_identity()` recitește tot fișierul. Adevărat — dar `_connection_locked()`
+îl mai amprenta o dată, pentru linia de log de la deschidere. Primul eveniment cu
+hash al unei rulări ar fi hash-uit 3,06 GB de **două** ori, ținând lacătul global
+de fiecare dată. Amprenta se calculează acum o dată per instantaneu deschis, ceea
+ce `immutable=1` garanta oricum: a doua citire a acelorași octeți nu poate da alt
+răspuns.
+
+**Și un gol pe care intrarea nu-l vedea deloc: suita citea instantaneul de
+producție.** Calea implicită e `storage/reputation.db`, iar acolo stau 3,28 GB
+reali. Fără izolare, fiecare deschidere din teste ar fi amprentat fișierul acela,
+iar un test care afirmă „hash absent → `unknown`" ar fi trecut pe o mașină și ar
+fi picat pe alta — cifra n-ar mai fi fost despre cod. Suita arată acum spre un
+fișier inexistent, deci implicitul ei e `reputation_unavailable`, iar testele
+care au nevoie de răspunsuri își construiesc propriul instantaneu. Aceeași formă
+de greșeală ca la P2.2, unde mutarea construirii în afara serverului rezolvase
+problema spațiului fără s-o bugeteze la noua adresă: o decizie corectă despre
+producție, nedusă până la montajul care o măsoară.
+
+**Ce s-a confirmat.** F9 nu era o precauție teoretică: mutând o singură linie —
+răspunsul construit din consultarea proaspătă în loc de din evenimentul stocat —
+testul de retransmisie devine roșu, deci invarianta chiar se poate rupe tăcut și
+chiar e păzită. Vocabularul a rămas exact cel din tabel, cu numele englezești.
+
+**Ce rămâne, și de ce intrarea e `partial`.** Pasul 6, criteriul de ieșire: o
+rulare pe instantaneu semiînzestrat, cu cifra de închidere la T0 lângă amprentă.
+Serverul nu are încă niciun contor publicat — dispoziția e interogabilă prin
+fluxul de evenimente și prin `run_reputation`, dar nu agregată. Împreună cu ea
+rămâne deschisă și distincția din secțiunea de cost: „închis la T0" înseamnă de
+acum două lucruri, unul declarat de agent prin treaptă și unul conchis de server
+prin dispoziție, iar cifra care se publică trebuie să spună care dintre ele e.
 
 ## Ce am învățat {#invatat}
 
