@@ -8,13 +8,14 @@
 # ── OBLIGATORIU ──────────────────────────────────────────────
 title:
 date: 2026-07-25
-tip: incident        # incident | decizie | corectie
+tip: incident        # incident | decizie | corectie | masuratoare
 rezumat:             # o singură frază — apare pe pagina de index
-tags: []             # vocabular ÎNCHIS, doar din lista de mai jos:
-                     #   retea, concurenta, persistenta, identitate,
-                     #   observabilitate, pdp, infrastructura
+tags: []             # vocabular ÎNCHIS. Lista completă e în `_data/teme.yml`
+                     # — acolo, nu aici, ca să nu existe două liste care
+                     # se despart în timp.
                      # Nu inventa tag-uri noi în timp ce scrii. Dacă unul
-                     # chiar lipsește, adaugă-l aici întâi, apoi folosește-l.
+                     # chiar lipsește: întâi intrarea în `teme.yml`, apoi
+                     # stub-ul `teme/<nume>.md`, abia apoi îl folosești.
 
 # ── OPȚIONAL, dar merită completat ───────────────────────────
 componente:          # agent | server | ambele

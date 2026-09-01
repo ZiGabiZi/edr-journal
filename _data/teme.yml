@@ -32,6 +32,10 @@
   titlu: Detecție
   descriere: Ce ajunge să fie observat pe endpoint și ce trece neobservat — evenimente de fișier, filtrare, suprimare, goluri de acoperire.
 
+- nume: reputatie
+  titlu: Reputație
+  descriere: Ce se știe despre un fișier înainte de orice analiză — surse externe, prevalență în parc, și separarea dintre „cunoscut ca software" și „cunoscut ca amenințare".
+
 - nume: pdp
   titlu: PDP
   descriere: Protocol de divulgare progresivă — divulgarea în trepte a datelor despre un fișier, guvernată de banda de incertitudine.
