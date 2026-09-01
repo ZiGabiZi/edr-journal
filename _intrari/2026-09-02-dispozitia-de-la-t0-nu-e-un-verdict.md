@@ -6,9 +6,9 @@ rezumat: Ce întoarce serverul la ingestia unui eveniment cu hash e o dispoziți
 tags: [pdp, contract, reputatie]
 capitol: "2.4"
 componente: ambele
-commits: [edr-server@96bcbfc, edr-server@60ce429, edr-server@eab31a6, edr-agent@52fa481, edr-agent@c786567, edr-agent@d04bdb2]
-teste: [app/tests/test_event_contract.py::test_event_response_declares_every_stored_field, app/tests/test_event_hash_contract.py::test_sha256_with_whitespace_is_rejected_although_fromhex_would_accept_it, app/tests/test_reputation_disposition.py::test_a_hash_from_rds_is_known_software_and_never_a_benign_word, app/tests/test_reputation_disposition.py::test_an_unreachable_snapshot_is_not_unknown, app/tests/test_reputation_disposition.py::test_a_retransmission_keeps_the_disposition_of_the_first_arrival]
-status: partial
+commits: [edr-server@96bcbfc, edr-server@60ce429, edr-server@eab31a6, edr-server@bffd10c, edr-agent@52fa481, edr-agent@c786567, edr-agent@d04bdb2]
+teste: [app/tests/test_event_contract.py::test_event_response_declares_every_stored_field, app/tests/test_event_hash_contract.py::test_sha256_with_whitespace_is_rejected_although_fromhex_would_accept_it, app/tests/test_reputation_disposition.py::test_a_hash_from_rds_is_known_software_and_never_a_benign_word, app/tests/test_reputation_disposition.py::test_an_unreachable_snapshot_is_not_unknown, app/tests/test_reputation_disposition.py::test_a_retransmission_keeps_the_disposition_of_the_first_arrival, app/tests/test_reputation_disposition.py::test_the_published_figure_carries_no_benign_term_and_no_closure_rate, app/tests/test_reputation_disposition.py::test_the_snapshot_is_warmed_at_startup_not_on_the_first_event]
+status: rezolvat
 ---
 
 ## Context {#context}
@@ -345,13 +345,75 @@ răspunsul construit din consultarea proaspătă în loc de din evenimentul stoc
 testul de retransmisie devine roșu, deci invarianta chiar se poate rupe tăcut și
 chiar e păzită. Vocabularul a rămas exact cel din tabel, cu numele englezești.
 
-**Ce rămâne, și de ce intrarea e `partial`.** Pasul 6, criteriul de ieșire: o
-rulare pe instantaneu semiînzestrat, cu cifra de închidere la T0 lângă amprentă.
-Serverul nu are încă niciun contor publicat — dispoziția e interogabilă prin
-fluxul de evenimente și prin `run_reputation`, dar nu agregată. Împreună cu ea
-rămâne deschisă și distincția din secțiunea de cost: „închis la T0" înseamnă de
-acum două lucruri, unul declarat de agent prin treaptă și unul conchis de server
-prin dispoziție, iar cifra care se publică trebuie să spună care dintre ele e.
+**Ce rămânea, și de ce intrarea a stat pe `partial`.** Pasul 6, criteriul de
+ieșire: o rulare pe instantaneu semiînzestrat, cu cifra de închidere la T0 lângă
+amprentă. Serverul nu avea încă niciun contor publicat — dispoziția era
+interogabilă prin fluxul de evenimente și prin `run_reputation`, dar nu agregată.
+Împreună cu ea rămânea deschisă și distincția din secțiunea de cost: „închis la
+T0" înseamnă de acum două lucruri, unul declarat de agent prin treaptă și unul
+conchis de server prin dispoziție, iar cifra care se publică trebuie să spună
+care dintre ele e.
+
+## Al doilea amendament: criteriul de ieșire {#criteriu}
+
+**Criteriul a fost rulat pe instantaneul real**, nu pe unul de test:
+72.029.536 de rânduri, NSRL RDS `2026.03.1` plus inventarul MalwareBazaar,
+amprenta `6567fc31a629b9b8…` — brațul semiînzestrat al ablației. Trei
+evenimente, fiecare cu treapta T0 și zero octeți de conținut:
+
+| hash | dispoziție | proveniență | latență |
+|---|---|---|---|
+| din MalwareBazaar (familia Quakbot) | `known_malicious` | `MalwareBazaar` | 13 ms |
+| din NSRL RDS | `known_software` | `None` | 9 ms |
+| absent din ambele | `unknown` | `None` | 13 ms |
+
+`next_action` a rămas `"none"` la toate trei: dispoziția a călătorit pe răspunsul
+aceleiași cereri. Pe canalul de evenimente s-au măsurat **1092 de octeți pentru
+trei mesaje**, iar `control`, `enrollment` și `other` au rămas la zero — nicio
+cerere suplimentară n-a existat, deci închiderea la T0 a costat exact evenimentul
+T0. Cu asta, jumătatea de citire a propoziției „un fișier escaladează o dată,
+parcul primește la T0" are prima ei demonstrație pe date reale.
+
+Celula de suprapunere e goală și aici, ca la P2.2.6: `both_axes` are contorul
+zero. E o observație corectă despre instantaneul de azi, nu un rând lipsă — dar
+înseamnă și că singura acoperire a acelei ramuri de cod vine din instantaneul
+sintetic al suitei.
+
+**Cifra publicată nu conține o rată de închidere, deliberat.** `GET
+/api/metrics/disclosure` capătă secțiunea `reputation`, cu cele cinci contoare,
+numitorul `events_with_hash` și instantaneele consemnate. Nu și un procent de
+„închis la T0": ar cere maparea dispoziție → închis, care e chiar decizia benzii
+(§L2.7). Cazul care o face nebanală e `known_software` — numărat ca închis, cifra
+ar spăla apartenența la RDS drept verdict de benignitate, pe ușa din dos a unei
+metrici, după ce structura depozitului a închis-o pe cea din față. Cine vrea rata
+o compune declarând ce a numărat ca închis.
+
+**Și criteriul a scos la iveală un defect pe care niciun test nu-l putea vedea.**
+Prima rulare a arătat 8349 ms pe primul eveniment: amprentarea celor 3,28 GB,
+calculată leneș, cădea pe calea de ingestie. Timeout-ul agentului e de 5 secunde,
+deci primul eveniment cu hash al FIECĂREI porniri de server expira garantat. Nu
+se pierdea nimic — un timeout nu e 4xx, deci coada îl reia — dar cererea expirată
+ajunsese deja la server și fusese cântărită de middleware, așa că fiecare pornire
+injecta o retransmisie în numărătorul măsurat al afirmației principale. Mică,
+sistematică, produsă de noi. Mutată în `lifespan`, secundele se plătesc unde nu
+așteaptă nimeni: 8349 ms → 13 ms.
+
+Lecția e mai generală decât reparația. F8 a mutat costul de la per-eveniment la
+per-rulare pe un argument corect, iar suita l-a confirmat — pe un instantaneu
+gol, unde amprentarea e instantanee. Costul rămas, o dată per proces, a devenit
+vizibil abia la 3,28 GB. Un montaj de test care e mai mic decât realitatea nu
+măsoară greșit, ci nu măsoară deloc constrângerea; e aceeași formă cu spațiul
+tranzitoriu de la P2.2, mutat de pe disc pe ceas.
+
+**Ce NU demonstrează criteriul.** Trei evenimente sintetice pe o mașină, nu o
+măsurătoare. Afirmația de la §3.1 — costul marginal al celui de-al `N`-lea
+endpoint — cere endpoint-uri adăugate eșalonat și corpusul întreg, iar §2.12
+fixează montajul. Ce s-a demonstrat aici e că mecanismul există și că răspunsul
+nu costă octeți ascendenți în plus; cât economisește parcul rămâne de măsurat.
+
+Rămâne deschis, în afara acestui pas: banda de incertitudine, care va da în
+sfârșit un sens lui „închis"; contabilizarea direcției descendente, declarată ca
+gol în secțiunea de cost; și mașina de stări per fișier, de la Etapa 3.
 
 ## Ce am învățat {#invatat}
 
