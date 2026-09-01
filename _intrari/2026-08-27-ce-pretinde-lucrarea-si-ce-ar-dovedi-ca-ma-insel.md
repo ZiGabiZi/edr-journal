@@ -172,7 +172,7 @@ nu una pescuită.
 agent, corpus cu suprapunere controlată între endpoint-uri — fără suprapunere,
 deduplicarea n-are ce demonstra; cu suprapunere totală, rezultatul e nerealist
 de bun. Proporția devine parametru de experiment, adică o obligație în plus la
-2.11.
+2.12.
 
 **Corpusul are acum o cerință numerică, nu o preferință.** 300 de mostre
 malițioase ca să pot spune „sub 1%". Sub 100, nu pot susține nimic util despre

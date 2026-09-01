@@ -4,7 +4,7 @@ date: 2026-09-01
 tip: masuratoare
 rezumat: Compoziția celor 1494 de fișiere pe care se va rula evaluarea, pre-înregistrată cu tot cu abaterile de la specificație, înainte să existe vreo cifră.
 tags: [pdp, observabilitate]
-capitol: "2.11"
+capitol: "2.12"
 componente: ambele
 commits: []
 teste: []

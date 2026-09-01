@@ -40,26 +40,30 @@
       descriere: Ce urcă la fiecare treaptă și de ce artefactul e suficient pentru decizia treptei, fără să fie mai mult decât atât.
 
     - nume: "2.6"
+      titlu: Sursele de reputație și cele două axe de cunoaștere
+      descriere: De unde vine ce se știe despre un fișier înainte de orice analiză — și de ce „cunoscut ca software" și „cunoscut ca amenințare" sunt două axe independente, nu o singură etichetă.
+
+    - nume: "2.7"
       titlu: Funcția de cost și banda de incertitudine
       descriere: Regula care decide când se oprește divulgarea — ce se compară, ce se plătește la fiecare treaptă și unde cade pragul.
 
-    - nume: "2.7"
+    - nume: "2.8"
       titlu: "Coborârea regulilor: distribuția rulesetului în medii izolate"
       descriere: Precondiția invariantului. Dacă regulile nu pot coborî, verdictul local nu se poate calcula, iar singura cale rămasă e urcarea fișierului — adică exact ce interzice invarianta. Cererea pe care canalul de directive din 3.7 o satisface.
 
-    - nume: "2.8"
+    - nume: "2.9"
       titlu: Transportul securizat și riscul rezidual
       descriere: Al doilea adversar. PDP-ul mărginește ce ajunge să existe în afara endpoint-ului, transportul apără ce e deja pe drum; sunt două riscuri reziduale diferite și se revendică separat.
 
-    - nume: "2.9"
+    - nume: "2.10"
       titlu: Registrul de divulgare ca metrică de protocol
       descriere: Ce se numără ca să se poată compara — octeții per treaptă și decizia care i-a cerut, ca proprietate măsurabilă a protocolului.
 
-    - nume: "2.10"
+    - nume: "2.11"
       titlu: "Linia de bază: modelul always-upload"
       descriere: Alternativa respinsă, descrisă ca model propriu-zis, nu invocată ca termen de comparație. Fără ea, comparația din evaluare apare din nimic.
 
-    - nume: "2.11"
+    - nume: "2.12"
       titlu: Mediul de testare și protocolul de măsurare
       descriere: Montajul — ce se rulează, pe ce și cu ce sarcină de lucru. Secțiunea pe care o intrare de tip măsurătoare o pre-înregistrează înainte să existe cifra.
 

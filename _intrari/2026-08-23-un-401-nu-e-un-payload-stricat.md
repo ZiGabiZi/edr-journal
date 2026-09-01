@@ -4,7 +4,7 @@ date: 2026-08-23
 tip: decizie
 rezumat: Orice 4xx în afară de 404, 408 și 429 era eroare fatală, iar o eroare fatală trece prin aceeași metodă ca un succes — evenimentul dispare din coadă. Pentru 422 e corect. Pentru 401, spool-ul construit ca să garanteze at-least-once ar fi devenit at-most-once fix când ceva era stricat.
 tags: [identitate, contract, retea, persistenta]
-capitol: "2.8"
+capitol: "2.9"
 componente: ambele
 commits: [edr-agent@045100b, edr-server@5f40087, edr-server@1011351, edr-agent@b4b695c, edr-agent@710b9ee, edr-agent@9f70450, edr-server@cd85bab, edr-agent@a88f596]
 teste: [tests/test_api_authentication.py::test_401_is_not_a_fatal_error, tests/test_api_authentication.py::test_422_is_still_fatal, tests/test_api_authentication.py::test_authentication_failure_keeps_the_event_queued, tests/test_api_authentication.py::test_a_401_does_not_stop_the_heartbeat_loop, tests/test_api_authentication.py::test_a_name_conflict_keeps_the_agent_retrying, tests/test_api_authentication.py::test_the_dispatcher_picks_up_a_credential_fixed_on_disk, tests/test_api_authentication.py::test_a_key_that_could_not_be_written_keeps_the_secret, app/tests/test_api_authentication.py::test_an_agent_cannot_write_events_in_the_name_of_another, app/tests/test_api_authentication.py::test_identity_is_checked_before_the_agent_is_looked_up, app/tests/test_api_authentication.py::test_the_store_keeps_a_fingerprint_not_the_key, app/tests/test_api_authentication.py::test_the_public_agent_list_never_carries_key_material]
