@@ -6,9 +6,9 @@ rezumat: Prevalența e prima cunoaștere care e a parcului, nu împrumutată din
 tags: [reputatie, pdp, contract]
 capitol: "2.6"
 componente: ambele
-commits: []
-teste: []
-status: deschis
+commits: [edr-server@6f3b428, edr-server@5fb0520, edr-server@a43121a]
+teste: [app/tests/test_prevalence.py::test_the_first_endpoint_counts_itself, app/tests/test_prevalence.py::test_prevalence_grows_with_machines_not_with_events, app/tests/test_prevalence.py::test_a_retransmission_keeps_the_prevalence_of_the_first_arrival, app/tests/test_prevalence.py::test_the_run_baseline_is_recorded_before_the_first_event, app/tests/test_prevalence.py::test_the_histogram_counts_contents_not_events, app/tests/test_prevalence.py::test_the_histogram_reproduces_a_known_distribution, app/tests/test_prevalence.py::test_on_an_empty_registry_every_content_is_seen_first_exactly_once]
+status: rezolvat
 ---
 
 ## Context {#context}
@@ -204,6 +204,62 @@ dar crește, iar un parc real l-ar simți acolo unde 5784 nu se simte deloc.
 care au *raportat* fișierul, nu pe cele care îl au. Un endpoint oprit, unul cu
 coada plină, sau unul care n-a atins încă directorul monitorizat lipsesc din
 număr. Limitare declarată, nu rezolvabilă la acest strat.
+
+## Amendament: ce a ieșit {#schimbat}
+
+Intrarea a fost scrisă înainte de prima linie de cod. Registrul, blocul de pe
+fir, cifra publicată și criteriul de ieșire sunt livrate; contractul a ajuns la
+v9, iar `METRICS.md` a căpătat §3.6.
+
+**Predicția s-a confirmat exact.** Serverul a fost condus cu planul de plasare
+din intrarea de corpus — 1494 de conținuturi, 5784 de plasări, cinci
+endpoint-uri — iar histograma publicată a ieșit `{1: 363, 2: 64, 3: 21, 5: 1046}`,
+identică cu ce scria aici înainte de măsurătoare. `machines_per_hash` a ieșit
+3,8715, față de 3,87 proiectat. Nu e o surpriză, e ce trebuia să iasă; valoarea
+cifrei stă în faptul că ar fi putut să nu iasă.
+
+**O decizie a devenit structură la implementare.** M6 spunea „se înregistrează
+întâi, se citește după". Prima versiune avea două funcții, iar cea de scriere
+încerca să întoarcă „e vedere nouă?" din `rowcount` — greșit, fiindcă `rowcount`
+e 1 și la inserare, și la actualizare-pe-conflict, deci n-are cum să le
+deosebească. Contopite într-o singură funcție care scrie și citește sub același
+lacăt, ordinea nu mai poate fi inversată de un apelant grăbit, iar decizia nu mai
+depinde de memoria nimănui.
+
+**Și o corecție la propria mea verificare, mai instructivă decât rezultatul.**
+Criteriul trebuia să arate că agregatul e reproductibil în timp ce valorile per
+eveniment nu sunt. Prima rulare a raportat **zero** răspunsuri diferite între
+cele două ordini de sosire — ceea ce ar fi contrazis intrarea. Nu sistemul era în
+neregulă: cele două ordini pe care le alesesem păstrau amândouă aceeași secvență
+de endpoint-uri per fișier, deci erau echivalente exact pentru întrebarea pusă.
+Cu a doua ordine inversată cu adevărat, 4354 din 5784 de răspunsuri diferă, iar
+histograma rămâne identică.
+
+O comparație care vrea să arate o diferență trebuie să demonstreze întâi că cele
+două lucruri comparate chiar diferă. Altfel „nicio diferență" e citit ca rezultat,
+când e doar un test care n-a atins subiectul.
+
+**O invariantă apărută la proiectarea cifrei, care nu era în intrare:** pe o
+memorie goală, `events_at_first_sighting` trebuie să fie egal cu
+`distinct_hashes` — fiecare conținut are exact o primă vedere. Dacă diferă, ori
+s-a numărat de două ori o primă vedere, ori una s-a pierdut, și niciuna n-ar
+produce vreo eroare vizibilă altundeva. E test acum.
+
+**Ce NU demonstrează criteriul.** Hash-uri sintetice, fără agenți reali și fără
+corpusul de pe disc. S-a verificat că **conducta de numărare reproduce o
+distribuție cunoscută** — deci, dacă la măsurătoarea adevărată iese altceva,
+defectul e în parc sau în agenți, nu în server. Măsurătoarea propriu-zisă rămâne.
+
+**Un gol de proces, descoperit la închidere.** Exemplarul de contract din
+`edr-agent` a rămas necomis de două ori la rând, iar suita n-a spus nimic:
+verificarea cross-repo compară fișierele **de pe disc**, nu ce e comis în
+fiecare repo. Regula „aceeași sesiune, ambele repo-uri" e apărată deci doar cât
+timp nimeni nu uită să comită — exact forma de garanție pe care contractul există
+să o înlocuiască. Comparația ar trebui să se uite la copiile comise.
+
+**Ce rămâne.** Măsurătoarea reală, cu corpusul și cei cinci agenți. Și datoria de
+la P2.3, care s-a dublat: pe legătura descendentă circulă acum două blocuri, iar
+registrul de fir tot nu numără direcția aceea.
 
 ## Ce am învățat {#invatat}
 
